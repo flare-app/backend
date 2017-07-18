@@ -1,5 +1,6 @@
 package de.flare.properties;
 
+import com.sun.istack.internal.NotNull;
 import de.flare.logging.SimpleLogger;
 
 import java.io.IOException;
@@ -47,67 +48,116 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getProperty(String propertyKey) {
-		return properties.getOrDefault(propertyKey, "");
+	@NotNull
+	public String getString(String propertyKey) {
+		String result = getStringOrDefault(propertyKey, "");
+
+		if (result == null) {
+			return "";
+		}
+
+		return result;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getPropertyAsInt(String propertyKey) {
-		return getPropertyAsInt(propertyKey, 0);
+	public String getStringOrDefault(String propertyKey, String defaultValue) {
+		return properties.getOrDefault(propertyKey, defaultValue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getPropertyAsInt(String propertyKey, int defaultValue) {
-		return getProperty(propertyKey, Integer::parseInt, defaultValue);
+	@NotNull
+	public int getInt(String propertyKey) {
+		return getIntOrDefault(propertyKey, 0);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public long getPropertyAsLong(String propertyKey) {
-		return getPropertyAsLong(propertyKey, 0);
+	public int getIntOrDefault(String propertyKey, int defaultValue) {
+		return get(propertyKey, Integer::parseInt, defaultValue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public long getPropertyAsLong(String propertyKey, long defaultValue) {
-		return getProperty(propertyKey, Long::parseLong, defaultValue);
+	@NotNull
+	public long getLong(String propertyKey) {
+		return getLongOrDefault(propertyKey, 0);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean getPropertyAsBool(String propertyKey) {
-		return getPropertyAsBool(propertyKey, false);
+	public long getLongOrDefault(String propertyKey, long defaultValue) {
+		return get(propertyKey, Long::parseLong, defaultValue);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean getPropertyAsBool(String propertyKey, boolean defaultValue) {
-		return getProperty(propertyKey, Boolean::parseBoolean, defaultValue);
+	@NotNull
+	public boolean getBool(String propertyKey) {
+		return getBoolOrDefault(propertyKey, false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PropertyEditor setProperty(String propertyKey, String propertyValue) {
-		properties.put(propertyKey, propertyValue);
-
-		return this;
+	public boolean getBoolOrDefault(String propertyKey, boolean defaultValue) {
+		return get(propertyKey, Boolean::parseBoolean, defaultValue);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public PropertyEditor setString(String propertyKey, String propertyValue) {
+		if (propertyValue == null) {
+			propertyValue = "";
+		}
+
+		return set(propertyKey, propertyValue, (String value) -> value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public PropertyEditor setInt(String propertyKey, int propertyValue) {
+		return set(propertyKey, propertyValue, (Integer value) -> Integer.toString(value));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public PropertyEditor setLong(String propertyKey, long propertyValue) {
+		return set(propertyKey, propertyValue, (Long value) -> Long.toString(value));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public PropertyEditor setBool(String propertyKey, boolean propertyValue) {
+		return set(propertyKey, propertyValue, (Boolean value) -> Boolean.toString(value));
+	}
+
 	//endregion
 
 	//region private methods
@@ -136,14 +186,14 @@ public final class SimplePropertyEditor implements PropertyEditor {
 
 	/**
 	 * This method returns a specified property, converted to a specified type.
+	 * @param <Type> the type to cast the property value to
 	 * @param propertyKey the property key
 	 * @param converter the converter method
 	 * @param defaultValue a default value, if something goes wrong
-	 * @param <Type> the type to cast the property value to
 	 * @return the converted property value
 	 */
-	private <Type> Type getProperty(String propertyKey, Function<String, Type> converter, Type defaultValue) {
-		String value = getProperty(propertyKey);
+	private <Type> Type get(String propertyKey, Function<String, Type> converter, Type defaultValue) {
+		String value = getString(propertyKey);
 
 		if (value.isEmpty()) {
 			return defaultValue;
@@ -155,6 +205,21 @@ public final class SimplePropertyEditor implements PropertyEditor {
 			// suppress exception
 			return defaultValue;
 		}
+	}
+
+	/**
+	 * This method sets the value for a specified property.
+	 * @param propertyKey the property to set
+	 * @param propertyValue the value to set
+	 * @param converter the converter, to convert the value to a string
+	 * @param <Type> the value type
+	 * @return this property editor
+	 */
+	@NotNull
+	private <Type> PropertyEditor set(String propertyKey, Type propertyValue, Function<Type, String> converter) {
+		properties.put(propertyKey, converter.apply(propertyValue));
+
+		return this;
 	}
 	//endregion
 }

@@ -45,7 +45,7 @@ public final class Application {
 				continue;
 			}
 
-			SimplePropertyEditor.getInstance().setProperty(splitArg[0], splitArg[1]);
+			SimplePropertyEditor.getInstance().setString(splitArg[0], splitArg[1]);
 		}
 	}
 	//endregion

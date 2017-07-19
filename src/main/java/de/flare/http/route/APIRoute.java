@@ -1,8 +1,9 @@
 package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.http.route.definition.RouteAccessLevel;
 import de.flare.http.route.parameter.UriParameter;
+import de.flare.storage.user.authentication.AuthenticationGroup;
+import de.flare.storage.user.authentication.SimpleAuthenticationGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,105 +18,60 @@ public class APIRoute implements RestRoute {
 	private RequestMethod method = RequestMethod.GET;
 	private String uri = "";
 	private Collection<UriParameter> parameters = new ArrayList<>();
-	private int accessLevel = RouteAccessLevel.FLARE_ADMINISTRATOR;
-	private int modifyLevel = RouteAccessLevel.FLARE_ADMINISTRATOR;
+	private AuthenticationGroup accessGroup = SimpleAuthenticationGroup.AUTHENTICATED;
 	//endregion
 
 	//region ctor
+
 	/**
-	 * This method returns a new GET route, which can only be modified by the flare administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
+	 * This is the default constructor for this class.
 	 */
-	public static RestRoute getFlare(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.GET)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
+	public APIRoute() {
+
 	}
 
 	/**
-	 * This method returns a new GET route, which can be modified by any administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
+	 * This constructor sets the access levels for this rest route.
+	 * @param accessGroup the group of users, who may access this route
 	 */
-	public static RestRoute getLocal(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.GET)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
+	public APIRoute(@NotNull AuthenticationGroup accessGroup) {
+		this.accessGroup = accessGroup;
 	}
 
 	/**
-	 * This method returns a new POST route, which can only be modified by the flare administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
+	 * This method creates a new GET route with the specified access group.
+	 * @param accessGroup the group of users, who have access to this route
+	 * @return the route
 	 */
-	public static RestRoute postFlare(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.POST)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
+	public static RestRoute get(@NotNull AuthenticationGroup accessGroup) {
+		return new APIRoute(accessGroup).setMethod(RequestMethod.GET);
 	}
 
 	/**
-	 * This method returns a new POST route, which can be modified by any administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
+	 * This method creates a new POST route with the specified access group.
+	 * @param accessGroup the group of users, who have access to this route
+	 * @return the route
 	 */
-	public static RestRoute postLocal(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.POST)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
+	public static RestRoute post(@NotNull AuthenticationGroup accessGroup) {
+		return new APIRoute(accessGroup).setMethod(RequestMethod.POST);
 	}
 
 	/**
-	 * This method returns a new PUT route, which can only be modified by the flare administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
+	 * This method creates a new PUT route with the specified access group.
+	 * @param accessGroup the group of users, who have access to this route
+	 * @return the route
 	 */
-	public static RestRoute putFlare(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.PUT)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
+	public static RestRoute put(@NotNull AuthenticationGroup accessGroup) {
+		return new APIRoute(accessGroup).setMethod(RequestMethod.PUT);
 	}
 
 	/**
-	 * This method returns a new PUT route, which can be modified by any administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
+	 * This method creates a new DELETE route with the specified access group.
+	 * @param accessGroup the group of users, who have access to this route
+	 * @return the route
 	 */
-	public static RestRoute putLocal(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.PUT)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
-	}
-
-	/**
-	 * This method returns a new DELETE route, which can only be modified by the flare administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
-	 */
-	public static RestRoute deleteFlare(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.DELETE)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
-	}
-
-	/**
-	 * This method returns a new DELETE route, which can be modified by any administrator.
-	 * @param accessLevel the access level for the route
-	 * @return the new rest route
-	 */
-	public static RestRoute deleteLocal(int accessLevel) {
-		return new APIRoute()
-				.setMethod(RequestMethod.DELETE)
-				.setAccessLevel(accessLevel)
-				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
+	public static RestRoute delete(@NotNull AuthenticationGroup accessGroup) {
+		return new APIRoute(accessGroup).setMethod(RequestMethod.DELETE);
 	}
 	//endregion
 
@@ -181,36 +137,9 @@ public class APIRoute implements RestRoute {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getAccessLevel() {
-		return accessLevel;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	@NotNull
-	public RestRoute setAccessLevel(int level) {
-		accessLevel = level;
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getModificationLevel() {
-		return modifyLevel;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public RestRoute setModificationLevel(int level) {
-		modifyLevel = level;
-		return this;
+	public AuthenticationGroup getAccessGroup() {
+		return accessGroup;
 	}
 	//endregion
 }

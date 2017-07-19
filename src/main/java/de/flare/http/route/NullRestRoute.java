@@ -1,8 +1,9 @@
 package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.http.route.definition.RouteAccessLevel;
 import de.flare.http.route.parameter.UriParameter;
+import de.flare.storage.user.authentication.AuthenticationGroup;
+import de.flare.storage.user.authentication.SimpleAuthenticationGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,34 +73,9 @@ public class NullRestRoute implements RestRoute {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getAccessLevel() {
-		return RouteAccessLevel.NONE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	@NotNull
-	public RestRoute setAccessLevel(int level) {
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getModificationLevel() {
-		return RouteAccessLevel.NONE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public RestRoute setModificationLevel(int level) {
-		return this;
+	public AuthenticationGroup getAccessGroup() {
+		return SimpleAuthenticationGroup.AUTHENTICATED;
 	}
 	//endregion
 }

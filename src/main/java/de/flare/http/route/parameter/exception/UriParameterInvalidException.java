@@ -10,6 +10,12 @@ import de.flare.http.route.parameter.UriParameterConstraint;
 public class UriParameterInvalidException extends Exception {
 
 	//region ctor
+
+	/**
+	 * This constructor initializes the exception.
+	 * @param parameter the parameter, which caused the exception
+	 * @param constraint the constraint, which failed
+	 */
 	public UriParameterInvalidException(@NotNull UriParameter parameter, @NotNull UriParameterConstraint constraint) {
 		super(String.format("constraint for parameter '%s' failed: %s",
 				parameter.getName(),

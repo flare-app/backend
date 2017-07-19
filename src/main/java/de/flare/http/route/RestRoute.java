@@ -2,6 +2,7 @@ package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.http.route.parameter.UriParameter;
+import de.flare.storage.user.authentication.AuthenticationGroup;
 
 import java.util.Collection;
 
@@ -56,28 +57,9 @@ public interface RestRoute {
 	Collection<UriParameter> getParameters();
 
 	/**
-	 * This method returns the required access level of this rest route.
-	 * @return the required access level
+	 * This method returns the user group, which may access this route.
+	 * @return the user group, which is allowed to access this route
 	 */
-	int getAccessLevel();
-
-	/**
-	 * This method sets the required access level for this rest route.
-	 * @param level the level to set
-	 * @return this rest route
-	 */
-	RestRoute setAccessLevel(int level);
-
-	/**
-	 * This method return the required level to modify this rest route.
-	 * @return the required level to modify this rest route via API
-	 */
-	int getModificationLevel();
-
-	/**
-	 * This method sets the required level to modify this rest route via API.
-	 * @param level the required level
-	 * @return this rest route
-	 */
-	RestRoute setModificationLevel(int level);
+	@NotNull
+	AuthenticationGroup getAccessGroup();
 }

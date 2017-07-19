@@ -1,10 +1,10 @@
 package de.flare.http.server;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.definition.StatusCodes;
 import de.flare.http.exception.HttpException;
 import de.flare.http.exception.WebServerAlreadyRunningException;
 import de.flare.http.exception.WebServerNotRunningException;
-import de.flare.http.definition.StatusCodes;
 import de.flare.http.request.APIRequest;
 import de.flare.http.request.RestRequest;
 import de.flare.http.response.APIResponse;

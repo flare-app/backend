@@ -108,7 +108,13 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	public boolean getBoolOrDefault(@NotNull String propertyKey, boolean defaultValue) {
-		return get(propertyKey, Boolean::parseBoolean, defaultValue);
+		return get(propertyKey, (String value) -> {
+			if (value.equalsIgnoreCase("false") || value.equalsIgnoreCase("true")) {
+				return Boolean.parseBoolean(value);
+			}
+
+			return defaultValue;
+		}, defaultValue);
 	}
 
 	/**
@@ -182,7 +188,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * @return the converted property value
 	 */
 	private <Type> Type get(String propertyKey, Function<String, Type> converter, Type defaultValue) {
-		String value = getString(propertyKey);
+		String value = getStringOrDefault(propertyKey, null);
 
 		try {
 			return converter.apply(value);

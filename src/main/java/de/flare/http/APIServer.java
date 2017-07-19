@@ -28,7 +28,7 @@ public class APIServer implements WebServer {
 	 * @param propertyEditor the property editor to get the configuration data from
 	 * @return the new API server, or null if something goes wrong
 	 */
-	public static WebServer start(PropertyEditor propertyEditor) {
+	public static WebServer start(@NotNull  PropertyEditor propertyEditor) {
 		WebServerConfiguration configuration = BasicConfiguration.createFromProperties(propertyEditor);
 		WebServer server;
 
@@ -48,7 +48,7 @@ public class APIServer implements WebServer {
 	 */
 	@Override
 	@NotNull
-	public WebServer start(WebServerConfiguration configuration) throws WebServerAlreadyRunningException {
+	public WebServer start(@NotNull WebServerConfiguration configuration) throws WebServerAlreadyRunningException {
 		if (sparkService != null) {
 			throw new WebServerAlreadyRunningException("API server was started earlier.");
 		}
@@ -57,7 +57,9 @@ public class APIServer implements WebServer {
 				.ignite()
 				.port(configuration.getPort())
 				.threadPool(configuration.getThreadPoolSize())
-				.staticFileLocation(configuration.getStaticFilePath());
+				.staticFileLocation(configuration.getStaticFilePath())
+				.secure(configuration.getKeyStoreLocation(), configuration.getKeyStorePassword(),
+					configuration.getTrustStoreLocation(), configuration.getTrustStorePassword());
 
 		// TODO: add rest endpoints
 
@@ -86,7 +88,7 @@ public class APIServer implements WebServer {
 	 */
 	@Override
 	@NotNull
-	public WebServer get(String uri, Route restRoute) throws WebServerNotRunningException {
+	public WebServer get(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException {
 		if (sparkService == null) {
 			throw new WebServerNotRunningException("API server was not started yet.");
 		}
@@ -100,7 +102,7 @@ public class APIServer implements WebServer {
 	 */
 	@Override
 	@NotNull
-	public WebServer post(String uri, Route restRoute) throws WebServerNotRunningException {
+	public WebServer post(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException {
 		if (sparkService == null) {
 			throw new WebServerNotRunningException("API server was not started yet.");
 		}
@@ -114,7 +116,7 @@ public class APIServer implements WebServer {
 	 */
 	@Override
 	@NotNull
-	public WebServer put(String uri, Route restRoute) throws WebServerNotRunningException {
+	public WebServer put(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException {
 		if (sparkService == null) {
 			throw new WebServerNotRunningException("API server was not started yet.");
 		}
@@ -128,7 +130,7 @@ public class APIServer implements WebServer {
 	 */
 	@Override
 	@NotNull
-	public WebServer delete(String uri, Route restRoute) throws WebServerNotRunningException {
+	public WebServer delete(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException {
 		if (sparkService == null) {
 			throw new WebServerNotRunningException("API server was not started yet.");
 		}
@@ -142,11 +144,7 @@ public class APIServer implements WebServer {
 	 */
 	@Override
 	@NotNull
-	public String getRouteParameter(String parameterName) throws IllegalArgumentException {
-		if (parameterName == null) {
-			throw new IllegalArgumentException("parameter name must not be null");
-		}
-
+	public String getRouteParameter(@NotNull String parameterName) {
 		return String.format("{%s}", parameterName);
 	}
 
@@ -157,7 +155,7 @@ public class APIServer implements WebServer {
 	 * This method sets the cross origin resource sharing options.
 	 * @param configuration the configuration, containing the CORS settings
 	 */
-	private void setCors(WebServerConfiguration configuration) {
+	private void setCors(@NotNull WebServerConfiguration configuration) {
 		sparkService.options("/*", (request, response) -> {
 
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -190,7 +188,7 @@ public class APIServer implements WebServer {
 	 * @param restRoute the spark route to execute
 	 * @return the response body
 	 */
-	private String executeRequest(Request request, Response response, Route restRoute) {
+	private String executeRequest(@NotNull Request request, @NotNull Response response, @NotNull Route restRoute) {
 		try {
 			restRoute.handle(request, response);
 		} catch (HaltException halt) {

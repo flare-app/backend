@@ -15,6 +15,10 @@ public class BasicConfiguration implements WebServerConfiguration {
 	private int port = 9898;
 	private int threads = 8;
 	private String staticFileLocation = "/public";
+	private String keyStoreLocation = "";
+	private String keyStorePassword = "";
+	private String trustStoreLocatoin = null;
+	private String trustStorePassword = null;
 	//endregion
 
 	//region private const
@@ -23,6 +27,10 @@ public class BasicConfiguration implements WebServerConfiguration {
 	private static final String ALLOWED_ORIGINS_PROPERTY_KEY = "flareBackendAllowedMethods";
 	private static final String ALLOWED_METHODS_PROPERTY_KEY = "flareBackendAllowedOrigin";
 	private static final String STATIC_FILE_LOCATION_PROPERTY_KEY = "flareBackendStaticFiles";
+	private static final String KEY_STORE_LOCATION_PROPERTY_KEY = "flareBackendKeyStoreLocation";
+	private static final String KEY_STORE_PASSWORD_PROPERTY_KEY = "flareBackendKeyStorePassword";
+	private static final String TRUST_STORE_LOCATION_PROPERTY_KEY = "flareBackendTrustStoreLocation";
+	private static final String TRUST_STORE_PASSWORD_PROPERTY_KEY = "flareBackendTrustStorePassword";
 	//endregion
 
 	//region ctor
@@ -38,7 +46,7 @@ public class BasicConfiguration implements WebServerConfiguration {
 	 * @param propertyEditor the property editor to get the configuration values from
 	 * @return the created web server configuration
 	 */
-	public static WebServerConfiguration createFromProperties(PropertyEditor propertyEditor) {
+	public static WebServerConfiguration createFromProperties(@NotNull PropertyEditor propertyEditor) {
 		WebServerConfiguration configuration = new BasicConfiguration();
 
 		return configuration
@@ -46,7 +54,11 @@ public class BasicConfiguration implements WebServerConfiguration {
 				.setAllowedMethods(propertyEditor.getStringOrDefault(ALLOWED_METHODS_PROPERTY_KEY, "*"))
 				.setPort(propertyEditor.getIntOrDefault(PORT_PROPERTY_KEY, MIN_PORT))
 				.setThreadPoolSize(propertyEditor.getIntOrDefault(THREADS_PROPERTY_KEY, MIN_THREADS))
-				.setStaticFileLocation(propertyEditor.getStringOrDefault(STATIC_FILE_LOCATION_PROPERTY_KEY, "/public"));
+				.setStaticFileLocation(propertyEditor.getStringOrDefault(STATIC_FILE_LOCATION_PROPERTY_KEY, "/public"))
+				.setKeyStoreLocations(propertyEditor.getStringOrDefault(KEY_STORE_LOCATION_PROPERTY_KEY, ""))
+				.setKeyStorePassword(propertyEditor.getStringOrDefault(KEY_STORE_PASSWORD_PROPERTY_KEY, ""))
+				.setTrustStoreLocation(propertyEditor.getStringOrDefault(TRUST_STORE_LOCATION_PROPERTY_KEY, null))
+				.setTrustStorePassword(propertyEditor.getStringOrDefault(TRUST_STORE_PASSWORD_PROPERTY_KEY, null));
 	}
 	//endregion
 
@@ -65,11 +77,7 @@ public class BasicConfiguration implements WebServerConfiguration {
 	 */
 	@Override
 	@NotNull
-	public WebServerConfiguration setAllowedOrigins(String origins) throws IllegalArgumentException {
-		if (origins == null || origins.isEmpty()) {
-			throw new IllegalArgumentException("illegal allowed origin");
-		}
-
+	public WebServerConfiguration setAllowedOrigins(@NotNull String origins) {
 		allowedOrigins = origins;
 		return this;
 	}
@@ -88,11 +96,7 @@ public class BasicConfiguration implements WebServerConfiguration {
 	 */
 	@Override
 	@NotNull
-	public WebServerConfiguration setAllowedMethods(String methods) throws IllegalArgumentException {
-		if (methods == null || methods.isEmpty()) {
-			throw new IllegalArgumentException("illegal allowed methods");
-		}
-
+	public WebServerConfiguration setAllowedMethods(@NotNull String methods) {
 		allowedMethods = methods;
 		return this;
 	}
@@ -157,14 +161,79 @@ public class BasicConfiguration implements WebServerConfiguration {
 	 */
 	@Override
 	@NotNull
-	public WebServerConfiguration setStaticFileLocation(String location) throws IllegalArgumentException {
-		if (location == null || location.isEmpty()) {
-			throw new IllegalArgumentException("invalid static file location");
-		}
-
+	public WebServerConfiguration setStaticFileLocation(@NotNull String location) {
 		staticFileLocation = location;
 		return this;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public String getKeyStoreLocation() {
+		return keyStoreLocation;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public WebServerConfiguration setKeyStoreLocations(@NotNull String location) {
+		keyStoreLocation = location;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public String getKeyStorePassword() {
+		return keyStorePassword;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public WebServerConfiguration setKeyStorePassword(@NotNull String password) {
+		keyStorePassword = password;
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getTrustStoreLocation() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public WebServerConfiguration setTrustStoreLocation(String location) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getTrustStorePassword() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public WebServerConfiguration setTrustStorePassword(String password) {
+		return null;
+	}
 	//endregion
 }

@@ -18,7 +18,7 @@ public interface WebServer {
 	 * @throws WebServerAlreadyRunningException thrown, if the web server was started earlier
 	 */
 	@NotNull
-	WebServer start(WebServerConfiguration configuration) throws WebServerAlreadyRunningException;
+	WebServer start(@NotNull WebServerConfiguration configuration) throws WebServerAlreadyRunningException;
 
 	/**
 	 * This method stops the web server.
@@ -35,7 +35,7 @@ public interface WebServer {
 	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
 	 */
 	@NotNull
-	WebServer get(String uri, Route restRoute) throws WebServerNotRunningException;
+	WebServer get(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
 
 	/**
 	 * This method registered a new POST route.
@@ -45,7 +45,7 @@ public interface WebServer {
 	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
 	 */
 	@NotNull
-	WebServer post(String uri, Route restRoute) throws WebServerNotRunningException;
+	WebServer post(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
 
 	/**
 	 * This method registered a new PUT route.
@@ -55,7 +55,7 @@ public interface WebServer {
 	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
 	 */
 	@NotNull
-	WebServer put(String uri, Route restRoute) throws WebServerNotRunningException;
+	WebServer put(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
 
 	/**
 	 * This method registered a new DELETE route.
@@ -65,13 +65,12 @@ public interface WebServer {
 	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
 	 */
 	@NotNull
-	WebServer delete(String uri, Route restRoute) throws WebServerNotRunningException;
+	WebServer delete(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
 
 	/**
 	 * This method returns the uri parameter for a given parameter name.
 	 * @param parameterName the parameter name
 	 * @return the uri parameter representation of the parameter
-	 * @throws IllegalArgumentException thrown, if the given parameter is invalid
 	 */
-	String getRouteParameter(String parameterName) throws IllegalArgumentException;
+	String getRouteParameter(@NotNull String parameterName);
 }

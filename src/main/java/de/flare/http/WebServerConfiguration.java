@@ -21,10 +21,9 @@ public interface WebServerConfiguration {
 	 * This method sets the allowed origins.
 	 * @param origins the allowed request origins.
 	 * @return this web server configuration
-	 * @throws IllegalArgumentException thrown, if the origins are invalid
 	 */
 	@NotNull
-	WebServerConfiguration setAllowedOrigins(String origins) throws IllegalArgumentException;
+	WebServerConfiguration setAllowedOrigins(@NotNull String origins);
 
 	/**
 	 * This method returns the allowed request methods.
@@ -37,10 +36,9 @@ public interface WebServerConfiguration {
 	 * This method sets the allowed request methods.
 	 * @param methods the allowed request methods
 	 * @return this web server configuration
-	 * @throws IllegalArgumentException thrown, if the methods are invalid
 	 */
 	@NotNull
-	WebServerConfiguration setAllowedMethods(String methods) throws IllegalArgumentException;
+	WebServerConfiguration setAllowedMethods(@NotNull String methods);
 
 	/**
 	 * This method returns the size of the underlying thread pool.
@@ -85,8 +83,63 @@ public interface WebServerConfiguration {
 	 * This methods sets the static file location for the web server.
 	 * @param location the location of the static files
 	 * @return this web server configuration
-	 * @throws IllegalArgumentException thrown, if the static file location is invalid
 	 */
 	@NotNull
-	WebServerConfiguration setStaticFileLocation(String location) throws IllegalArgumentException;
+	WebServerConfiguration setStaticFileLocation(@NotNull String location);
+
+	/**
+	 * This method returns the key store location.
+	 * @return the key store location
+	 */
+	@NotNull
+	String getKeyStoreLocation();
+
+	/**
+	 * This method sets the key store location.
+	 * @param location the locatio to set
+	 * @return this web server configuration
+	 */
+	@NotNull
+	WebServerConfiguration setKeyStoreLocations(@NotNull String location);
+
+	/**
+	 * This method returns the key store password.
+	 * @return the key store password
+	 */
+	@NotNull
+	String getKeyStorePassword();
+
+	/**
+	 * This method sets the key store password.
+	 * @param password the password to set
+	 * @return this web server configuration
+	 */
+	@NotNull
+	WebServerConfiguration setKeyStorePassword(@NotNull String password);
+
+	/**
+	 * This method returns the trust store location.
+	 * @return the location of the trust store file
+	 */
+	String getTrustStoreLocation();
+
+	/**
+	 * This method sets the trust store file. Hint: set 'null' to disable this option.
+	 * @param location the location of the trust store file
+	 * @return this web server configuration
+	 */
+	WebServerConfiguration setTrustStoreLocation(String location);
+
+	/**
+	 * This method returns the trust store password.
+	 * @return the password for the trust store
+	 */
+	String getTrustStorePassword();
+
+	/**
+	 * This method sets the trust store password. Hint: set 'null' to disable this option.
+	 * @param password the password for the trust store file
+	 * @return this web server configuration
+	 */
+	WebServerConfiguration setTrustStorePassword(String password);
 }

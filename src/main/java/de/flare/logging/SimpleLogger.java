@@ -1,5 +1,6 @@
 package de.flare.logging;
 
+import com.sun.istack.internal.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ public final class SimpleLogger {
 	 * @param message a custom message for logging
 	 * @param throwable the throwable
 	 */
-	public static void error(Class callerClass, String message, Throwable throwable) {
+	public static void error(@NotNull Class callerClass, @NotNull String message, @NotNull Throwable throwable) {
 		getLogger(callerClass).error(message, throwable);
 	}
 
@@ -37,7 +38,7 @@ public final class SimpleLogger {
 	 * @param callerClass the class of the caller
 	 * @param message the message to log
 	 */
-	public static void info(Class callerClass, String message) {
+	public static void info(@NotNull Class callerClass, @NotNull String message) {
 		getLogger(callerClass).info(message);
 	}
 	//endregion
@@ -49,7 +50,8 @@ public final class SimpleLogger {
 	 * @param callerClass the class of the caller
 	 * @return the logger for the caller class
 	 */
-	private static Logger getLogger(Class callerClass) {
+	@NotNull
+	private static Logger getLogger(@NotNull Class callerClass) {
 		if (!loggers.containsKey(callerClass)) {
 			loggers.put(callerClass, LoggerFactory.getLogger(callerClass));
 		}

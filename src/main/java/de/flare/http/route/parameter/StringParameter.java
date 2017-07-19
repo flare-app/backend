@@ -16,7 +16,13 @@ public class StringParameter implements UriParameter {
 	//endregion
 
 	//region ctor
-	public StringParameter() {
+
+	/**
+	 * This constructor initializes all members and sets the name of the uri parameter.
+	 * @param name the uri parameter name
+	 */
+	public StringParameter(@NotNull String name) {
+		setName(name);
 		this.addConstraint(UriParameterConstraint.NOT_NULL_NOT_EMPTY);
 	}
 	//endregion

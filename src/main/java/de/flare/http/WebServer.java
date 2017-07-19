@@ -8,9 +8,6 @@ import spark.Route;
  */
 public interface WebServer {
 
-	int OK = 200;
-	int ERROR = 500;
-
 	/**
 	 * This method starts the web server, using the specified configuration.
 	 * @param configuration the web server configuration to use

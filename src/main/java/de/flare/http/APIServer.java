@@ -197,7 +197,7 @@ public class APIServer implements WebServer {
 			response.body(halt.body());
 		} catch (Exception e) {
 			SimpleLogger.error(getClass(), "error while executing rest request '" + request.url() + "'", e);
-			response.status(ERROR);
+			response.status(StatusCodes.ERROR);
 			response.body(e.getMessage());
 		}
 

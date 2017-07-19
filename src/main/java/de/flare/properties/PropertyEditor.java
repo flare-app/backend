@@ -17,8 +17,7 @@ public interface PropertyEditor {
 	 * @param propertyKey the property to access
 	 * @return the value of the property, or an empty string
 	 */
-	@NotNull
-	String getString(String propertyKey);
+	String getString(@NotNull String propertyKey);
 
 	/**
 	 * This method tries to access a specified property, returning its value.
@@ -26,7 +25,7 @@ public interface PropertyEditor {
 	 * @param defaultValue the default value, if something goes wrong
 	 * @return the value of the property, or the default value
 	 */
-	String getStringOrDefault(String propertyKey, String defaultValue);
+	String getStringOrDefault(@NotNull String propertyKey, String defaultValue);
 
 	/**
 	 * This method tries to access a specified property, returning its value as int.
@@ -34,7 +33,7 @@ public interface PropertyEditor {
 	 * @return the value of the property, or 0
 	 */
 	@NotNull
-	int getInt(String propertyKey);
+	int getInt(@NotNull String propertyKey);
 
 	/**
 	 * This method tries to access a specified property, returning its value as int.
@@ -42,7 +41,7 @@ public interface PropertyEditor {
 	 * @param defaultValue the default value, if something goes wrong
 	 * @return the value of the property, or the default value
 	 */
-	int getIntOrDefault(String propertyKey, int defaultValue);
+	int getIntOrDefault(@NotNull String propertyKey, int defaultValue);
 
 	/**
 	 * This method tries to access a specified property, returning its value as long.
@@ -50,7 +49,7 @@ public interface PropertyEditor {
 	 * @return the value of the property, or 0
 	 */
 	@NotNull
-	long getLong(String propertyKey);
+	long getLong(@NotNull String propertyKey);
 
 	/**
 	 * This method tries to access a specified property, returning its value as long.
@@ -58,7 +57,7 @@ public interface PropertyEditor {
 	 * @param defaultValue the default value, if something goes wrong
 	 * @return the value of the property, or the default value
 	 */
-	long getLongOrDefault(String propertyKey, long defaultValue);
+	long getLongOrDefault(@NotNull String propertyKey, long defaultValue);
 
 	/**
 	 * This method tries to access a specified property, returning its value as boolean.
@@ -66,14 +65,14 @@ public interface PropertyEditor {
 	 * @return the value of the property, or false
 	 */
 	@NotNull
-	boolean getBool(String propertyKey);
+	boolean getBool(@NotNull String propertyKey);
 
 	/**
 	 * This method tries to access a specified property, returning its value as boolean.
 	 * @param propertyKey the property to access
 	 * @return the value of the property, or the default value
 	 */
-	boolean getBoolOrDefault(String propertyKey, boolean defaultValue);
+	boolean getBoolOrDefault(@NotNull String propertyKey, boolean defaultValue);
 
 	/**
 	 * This method sets the value for a given property.
@@ -82,7 +81,7 @@ public interface PropertyEditor {
 	 * @return this property editor
 	 */
 	@NotNull
-	PropertyEditor setString(String propertyKey, String propertyValue);
+	PropertyEditor setString(@NotNull String propertyKey, String propertyValue);
 
 	/**
 	 * This method sets the value for a given property.
@@ -91,7 +90,7 @@ public interface PropertyEditor {
 	 * @return this property editor
 	 */
 	@NotNull
-	PropertyEditor setInt(String propertyKey, int propertyValue);
+	PropertyEditor setInt(@NotNull String propertyKey, int propertyValue);
 
 	/**
 	 * This method sets the value for a given property.
@@ -100,7 +99,7 @@ public interface PropertyEditor {
 	 * @return this property editor
 	 */
 	@NotNull
-	PropertyEditor setLong(String propertyKey, long propertyValue);
+	PropertyEditor setLong(@NotNull String propertyKey, long propertyValue);
 
 	/**
 	 * This method sets the value for a given property.
@@ -109,5 +108,5 @@ public interface PropertyEditor {
 	 * @return this property editor
 	 */
 	@NotNull
-	PropertyEditor setBool(String propertyKey, boolean propertyValue);
+	PropertyEditor setBool(@NotNull String propertyKey, boolean propertyValue);
 }

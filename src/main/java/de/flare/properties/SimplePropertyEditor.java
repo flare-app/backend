@@ -48,22 +48,15 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@NotNull
-	public String getString(String propertyKey) {
-		String result = getStringOrDefault(propertyKey, "");
-
-		if (result == null) {
-			return "";
-		}
-
-		return result;
+	public String getString(@NotNull String propertyKey) {
+		return getStringOrDefault(propertyKey, "");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getStringOrDefault(String propertyKey, String defaultValue) {
+	public String getStringOrDefault(@NotNull String propertyKey, String defaultValue) {
 		return properties.getOrDefault(propertyKey, defaultValue);
 	}
 
@@ -72,7 +65,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public int getInt(String propertyKey) {
+	public int getInt(@NotNull String propertyKey) {
 		return getIntOrDefault(propertyKey, 0);
 	}
 
@@ -80,7 +73,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getIntOrDefault(String propertyKey, int defaultValue) {
+	public int getIntOrDefault(@NotNull String propertyKey, int defaultValue) {
 		return get(propertyKey, Integer::parseInt, defaultValue);
 	}
 
@@ -89,7 +82,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public long getLong(String propertyKey) {
+	public long getLong(@NotNull String propertyKey) {
 		return getLongOrDefault(propertyKey, 0);
 	}
 
@@ -97,7 +90,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public long getLongOrDefault(String propertyKey, long defaultValue) {
+	public long getLongOrDefault(@NotNull String propertyKey, long defaultValue) {
 		return get(propertyKey, Long::parseLong, defaultValue);
 	}
 
@@ -106,7 +99,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public boolean getBool(String propertyKey) {
+	public boolean getBool(@NotNull String propertyKey) {
 		return getBoolOrDefault(propertyKey, false);
 	}
 
@@ -114,7 +107,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean getBoolOrDefault(String propertyKey, boolean defaultValue) {
+	public boolean getBoolOrDefault(@NotNull String propertyKey, boolean defaultValue) {
 		return get(propertyKey, Boolean::parseBoolean, defaultValue);
 	}
 
@@ -123,11 +116,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setString(String propertyKey, String propertyValue) {
-		if (propertyValue == null) {
-			propertyValue = "";
-		}
-
+	public PropertyEditor setString(@NotNull String propertyKey, String propertyValue) {
 		return set(propertyKey, propertyValue, (String value) -> value);
 	}
 
@@ -136,7 +125,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setInt(String propertyKey, int propertyValue) {
+	public PropertyEditor setInt(@NotNull String propertyKey, int propertyValue) {
 		return set(propertyKey, propertyValue, (Integer value) -> Integer.toString(value));
 	}
 
@@ -145,7 +134,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setLong(String propertyKey, long propertyValue) {
+	public PropertyEditor setLong(@NotNull String propertyKey, long propertyValue) {
 		return set(propertyKey, propertyValue, (Long value) -> Long.toString(value));
 	}
 
@@ -154,7 +143,7 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setBool(String propertyKey, boolean propertyValue) {
+	public PropertyEditor setBool(@NotNull String propertyKey, boolean propertyValue) {
 		return set(propertyKey, propertyValue, (Boolean value) -> Boolean.toString(value));
 	}
 
@@ -195,10 +184,6 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	private <Type> Type get(String propertyKey, Function<String, Type> converter, Type defaultValue) {
 		String value = getString(propertyKey);
 
-		if (value.isEmpty()) {
-			return defaultValue;
-		}
-
 		try {
 			return converter.apply(value);
 		} catch (Exception e) {
@@ -216,8 +201,12 @@ public final class SimplePropertyEditor implements PropertyEditor {
 	 * @return this property editor
 	 */
 	@NotNull
-	private <Type> PropertyEditor set(String propertyKey, Type propertyValue, Function<Type, String> converter) {
-		properties.put(propertyKey, converter.apply(propertyValue));
+	private <Type> PropertyEditor set(@NotNull String propertyKey, Type propertyValue, Function<Type, String> converter) {
+		try {
+			properties.put(propertyKey, converter.apply(propertyValue));
+		} catch (Exception e) {
+			SimpleLogger.error(getClass(), "cannot set property '" + propertyKey + "'", e);
+		}
 
 		return this;
 	}

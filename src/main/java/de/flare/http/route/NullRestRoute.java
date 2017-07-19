@@ -1,6 +1,7 @@
 package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.route.definition.RouteAccessLevel;
 import de.flare.http.route.parameter.UriParameter;
 
 import java.util.ArrayList;

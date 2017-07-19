@@ -1,6 +1,8 @@
-package de.flare.http.route.parameter;
+package de.flare.http.route.parameter.exception;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.route.parameter.UriParameter;
+import de.flare.http.route.parameter.UriParameterConstraint;
 
 /**
  * This exception is thrown, if at least one constraint for a given uri parameter failed.

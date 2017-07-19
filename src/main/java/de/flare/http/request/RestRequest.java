@@ -2,7 +2,7 @@ package de.flare.http.request;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.http.route.RestRoute;
-import de.flare.http.route.parameter.UriParameterInvalidException;
+import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 
 /**
  * This interface contains data for rest requests.

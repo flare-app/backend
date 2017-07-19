@@ -1,6 +1,7 @@
 package de.flare.http.route.parameter;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 
 import java.util.Collection;
 

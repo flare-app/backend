@@ -1,8 +1,8 @@
 package de.flare.http.response;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.http.MIMETypes;
-import de.flare.http.StatusCodes;
+import de.flare.http.definition.MIMETypes;
+import de.flare.http.definition.StatusCodes;
 
 /**
  * {@inheritDoc}

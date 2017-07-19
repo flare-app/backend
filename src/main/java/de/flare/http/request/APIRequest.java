@@ -1,11 +1,11 @@
 package de.flare.http.request;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.http.MIMETypes;
+import de.flare.http.definition.MIMETypes;
 import de.flare.http.route.NullRestRoute;
 import de.flare.http.route.RestRoute;
 import de.flare.http.route.parameter.UriParameter;
-import de.flare.http.route.parameter.UriParameterInvalidException;
+import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -2,7 +2,7 @@ package test.de.flare.http.parameter;
 
 import de.flare.http.route.parameter.StringParameter;
 import de.flare.http.route.parameter.UriParameter;
-import de.flare.http.route.parameter.UriParameterInvalidException;
+import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

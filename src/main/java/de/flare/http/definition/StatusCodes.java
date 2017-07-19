@@ -1,4 +1,4 @@
-package de.flare.http;
+package de.flare.http.definition;
 
 /**
  * This enum contains the http status codes.

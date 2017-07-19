@@ -1,8 +1,11 @@
-package de.flare.http;
+package de.flare.http.server;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.exception.WebServerAlreadyRunningException;
+import de.flare.http.exception.WebServerNotRunningException;
 import de.flare.http.route.RestRoute;
 import de.flare.http.route.execution.RestRouteHandler;
+import de.flare.http.server.configuration.WebServerConfiguration;
 
 /**
  * This interface offers methods for web server management.

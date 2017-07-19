@@ -1,4 +1,4 @@
-package de.flare.http.route;
+package de.flare.http.route.definition;
 
 import de.flare.storage.user.UserAccessLevel;
 

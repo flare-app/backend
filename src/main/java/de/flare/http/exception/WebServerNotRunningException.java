@@ -1,4 +1,4 @@
-package de.flare.http;
+package de.flare.http.exception;
 
 import com.sun.istack.internal.NotNull;
 

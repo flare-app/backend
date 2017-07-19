@@ -4,6 +4,7 @@ import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * This is the string uri parameter implementation.
@@ -62,7 +63,7 @@ public class StringParameter implements UriParameter {
 	@Override
 	@NotNull
 	public Collection<UriParameterConstraint> getConstraints() {
-		return constraints;
+		return Collections.unmodifiableCollection(constraints);
 	}
 
 	/**

@@ -4,20 +4,16 @@ import com.sun.istack.internal.NotNull;
 import de.flare.http.MIMETypes;
 import de.flare.http.StatusCodes;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * {@inheritDoc}
  * This is the API implementation. It is also throwable, in case you must stop the execution immediately.
  */
-public class APIResponse extends Throwable implements RestResponse {
+public class APIResponse implements RestResponse {
 
 	//region private members
 	private int status = StatusCodes.OK;
 	private String contentType = MIMETypes.TEXT_PLAIN;
 	private String body = "";
-	private Map<String, String> headers = new HashMap<>();
 	//endregion
 
 	//region ctor
@@ -108,25 +104,6 @@ public class APIResponse extends Throwable implements RestResponse {
 	@NotNull
 	public RestResponse setBody(@NotNull String body) {
 		this.body = body;
-		return this;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public Map<String, String> getHeaders() {
-		return headers;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	@NotNull
-	public RestResponse setHeader(@NotNull String name, @NotNull String value) {
-		headers.put(name, value);
 		return this;
 	}
 	//endregion

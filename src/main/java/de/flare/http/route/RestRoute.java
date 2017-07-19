@@ -15,7 +15,7 @@ public interface RestRoute {
 	 * @return the rest request method
 	 */
 	@NotNull
-	RestMethod getMethod();
+	RequestMethod getMethod();
 
 	/**
 	 * This method sets the rest request method for this route.
@@ -23,7 +23,7 @@ public interface RestRoute {
 	 * @return this rest route
 	 */
 	@NotNull
-	RestRoute setMethod(@NotNull RestMethod method);
+	RestRoute setMethod(@NotNull RequestMethod method);
 
 	/**
 	 * This method returns the uri of this rest route.

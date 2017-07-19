@@ -34,6 +34,15 @@ public final class SimpleLogger {
 	}
 
 	/**
+	 * This method logs an error message.
+	 * @param callerClass the class of the caller
+	 * @param message the message for logging
+	 */
+	public static void error(@NotNull Class callerClass, @NotNull String message) {
+		getLogger(callerClass).error(message);
+	}
+
+	/**
 	 * This method logs an info message.
 	 * @param callerClass the class of the caller
 	 * @param message the message to log

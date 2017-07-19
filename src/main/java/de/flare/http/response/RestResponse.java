@@ -2,8 +2,6 @@ package de.flare.http.response;
 
 import com.sun.istack.internal.NotNull;
 
-import java.util.Map;
-
 /**
  * This interface contains data for rest responses.
  */
@@ -52,20 +50,4 @@ public interface RestResponse {
 	 */
 	@NotNull
 	RestResponse setBody(@NotNull String body);
-
-	/**
-	 * This method returns a list of headers of this rest response.
-	 * @return the map of headers
-	 */
-	@NotNull
-	Map<String, String> getHeaders();
-
-	/**
-	 * This method sets a specified header.
-	 * @param name the header to set
-	 * @param value the value to set
-	 * @return this rest response
-	 */
-	@NotNull
-	RestResponse setHeader(@NotNull String name, @NotNull String value);
 }

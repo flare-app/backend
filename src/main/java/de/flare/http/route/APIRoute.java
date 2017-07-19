@@ -5,6 +5,7 @@ import de.flare.http.route.parameter.UriParameter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * {@inheritDoc}
@@ -12,7 +13,7 @@ import java.util.Collection;
 public class APIRoute implements RestRoute {
 
 	//region private methods
-	private RestMethod method = RestMethod.GET;
+	private RequestMethod method = RequestMethod.GET;
 	private String uri = "";
 	private Collection<UriParameter> parameters = new ArrayList<>();
 	private int accessLevel = RouteAccessLevel.FLARE_ADMINISTRATOR;
@@ -27,7 +28,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute getFlare(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.GET)
+				.setMethod(RequestMethod.GET)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
 	}
@@ -39,7 +40,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute getLocal(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.GET)
+				.setMethod(RequestMethod.GET)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
 	}
@@ -51,7 +52,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute postFlare(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.POST)
+				.setMethod(RequestMethod.POST)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
 	}
@@ -63,7 +64,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute postLocal(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.POST)
+				.setMethod(RequestMethod.POST)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
 	}
@@ -75,7 +76,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute putFlare(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.PUT)
+				.setMethod(RequestMethod.PUT)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
 	}
@@ -87,7 +88,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute putLocal(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.PUT)
+				.setMethod(RequestMethod.PUT)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
 	}
@@ -99,7 +100,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute deleteFlare(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.DELETE)
+				.setMethod(RequestMethod.DELETE)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.FLARE_ADMINISTRATOR);
 	}
@@ -111,7 +112,7 @@ public class APIRoute implements RestRoute {
 	 */
 	public static RestRoute deleteLocal(int accessLevel) {
 		return new APIRoute()
-				.setMethod(RestMethod.DELETE)
+				.setMethod(RequestMethod.DELETE)
 				.setAccessLevel(accessLevel)
 				.setModificationLevel(RouteAccessLevel.ADMINISTRATOR);
 	}
@@ -123,7 +124,7 @@ public class APIRoute implements RestRoute {
 	 */
 	@Override
 	@NotNull
-	public RestMethod getMethod() {
+	public RequestMethod getMethod() {
 		return method;
 	}
 
@@ -132,7 +133,7 @@ public class APIRoute implements RestRoute {
 	 */
 	@Override
 	@NotNull
-	public RestRoute setMethod(@NotNull RestMethod method) {
+	public RestRoute setMethod(@NotNull RequestMethod method) {
 		this.method = method;
 		return this;
 	}
@@ -172,7 +173,7 @@ public class APIRoute implements RestRoute {
 	@Override
 	@NotNull
 	public Collection<UriParameter> getParameters() {
-		return parameters;
+		return Collections.unmodifiableCollection(parameters);
 	}
 
 	/**

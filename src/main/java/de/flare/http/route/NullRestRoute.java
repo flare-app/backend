@@ -18,8 +18,8 @@ public class NullRestRoute implements RestRoute {
 	 */
 	@Override
 	@NotNull
-	public RestMethod getMethod() {
-		return RestMethod.GET;
+	public RequestMethod getMethod() {
+		return RequestMethod.GET;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class NullRestRoute implements RestRoute {
 	 */
 	@Override
 	@NotNull
-	public RestRoute setMethod(@NotNull RestMethod method) {
+	public RestRoute setMethod(@NotNull RequestMethod method) {
 		return this;
 	}
 

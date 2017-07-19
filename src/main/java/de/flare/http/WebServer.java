@@ -1,7 +1,8 @@
 package de.flare.http;
 
 import com.sun.istack.internal.NotNull;
-import spark.Route;
+import de.flare.http.route.RestRoute;
+import de.flare.http.route.execution.RestRouteHandler;
 
 /**
  * This interface offers methods for web server management.
@@ -25,49 +26,12 @@ public interface WebServer {
 	WebServer stop();
 
 	/**
-	 * This method registered a new GET route.
-	 * @param uri the uri for the route
-	 * @param restRoute the rest route handler
+	 * This method adds a new route to the web server.
+	 * @param restRoute the route to add
+	 * @param handler the handler, which handles the execution
 	 * @return this web server
-	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
+	 * @throws WebServerNotRunningException thrown, if the web server is not running
 	 */
 	@NotNull
-	WebServer get(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
-
-	/**
-	 * This method registered a new POST route.
-	 * @param uri the uri for the route
-	 * @param restRoute the rest route handler
-	 * @return this web server
-	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
-	 */
-	@NotNull
-	WebServer post(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
-
-	/**
-	 * This method registered a new PUT route.
-	 * @param uri the uri for the route
-	 * @param restRoute the rest route handler
-	 * @return this web server
-	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
-	 */
-	@NotNull
-	WebServer put(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
-
-	/**
-	 * This method registered a new DELETE route.
-	 * @param uri the uri for the route
-	 * @param restRoute the rest route handler
-	 * @return this web server
-	 * @throws WebServerNotRunningException thrown, if the web server is not started yet
-	 */
-	@NotNull
-	WebServer delete(@NotNull String uri, @NotNull Route restRoute) throws WebServerNotRunningException;
-
-	/**
-	 * This method returns the uri parameter for a given parameter name.
-	 * @param parameterName the parameter name
-	 * @return the uri parameter representation of the parameter
-	 */
-	String getRouteParameter(@NotNull String parameterName);
+	WebServer add(@NotNull RestRoute restRoute, @NotNull RestRouteHandler handler) throws WebServerNotRunningException;
 }

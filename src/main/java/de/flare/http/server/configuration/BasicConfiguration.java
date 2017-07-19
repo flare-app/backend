@@ -1,4 +1,4 @@
-package de.flare.http;
+package de.flare.http.server.configuration;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.properties.PropertyEditor;

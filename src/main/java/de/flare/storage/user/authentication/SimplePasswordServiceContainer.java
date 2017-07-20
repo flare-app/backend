@@ -1,7 +1,7 @@
 package de.flare.storage.user.authentication;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.core.FlareBackend_v1;
+import de.flare.properties.PropertyEditor;
 import de.flare.properties.SimplePropertyEditor;
 import de.flare.storage.user.User;
 
@@ -29,7 +29,7 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 	public SimplePasswordServiceContainer(@NotNull PasswordServiceType defaultServiceType) {
 		this.defaultServiceType = defaultServiceType;
 
-		String costString = SimplePropertyEditor.getInstance().getString(PASSWORD_HASH_COST_PROPERTY_KEY);
+		String costString = PropertyEditor.getString(PASSWORD_HASH_COST_PROPERTY_KEY);
 
 		boolean useDefaultCost = true;
 		int cost = 0;
@@ -47,14 +47,6 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 			passwordServices.put(PasswordServiceType.PBKDF2WithHmacSHA1_v1, new PBKDF2WithHmacSHA1_v1(cost));
 		}
 	}
-
-	/**
-	 * This method returns the flare backend instance of this class.
-	 * @return the flare backend instance of this class
-	 */
-	public static PasswordServiceContainer getInstance() {
-		return FlareBackend_v1.getInstance().getPasswordServiceContainer();
-	}
 	//endregion
 
 	//region password service container
@@ -63,7 +55,7 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 	 */
 	@Override
 	@NotNull
-	public String getPasswordToken(@NotNull String password) throws IllegalStateException {
+	public String _getPasswordToken(@NotNull String password) throws IllegalStateException {
 		return getDefaultService().getPasswordToken(password);
 	}
 
@@ -71,7 +63,7 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean matches(@NotNull User user, @NotNull String password, @NotNull String token) throws IllegalStateException {
+	public boolean _matches(@NotNull User user, @NotNull String password, @NotNull String token) throws IllegalStateException {
 		String[] tokenSplit = token.split(PasswordService.TOKEN_SEPARATOR);
 
 		if (tokenSplit.length < 2) {

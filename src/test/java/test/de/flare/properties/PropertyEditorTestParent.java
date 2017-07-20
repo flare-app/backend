@@ -16,9 +16,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		String propertyValue = UUID.randomUUID().toString();
 
-		implementation.setString(propertyKey, propertyValue);
+		implementation._setString(propertyKey, propertyValue);
 
-		String property = implementation.getString(propertyKey);
+		String property = implementation._getString(propertyKey);
 
 		assertNotNull(property);
 		assertEquals(propertyValue, property);
@@ -30,9 +30,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		String propertyValue = UUID.randomUUID().toString();
 
-		implementation.setString(propertyKey, propertyValue);
+		implementation._setString(propertyKey, propertyValue);
 
-		assertEquals(propertyValue, implementation.getStringOrDefault(propertyKey, ""));
+		assertEquals(propertyValue, implementation._getStringOrDefault(propertyKey, ""));
 	}
 
 	public abstract void testGetStringOrDefault_Default();
@@ -41,7 +41,7 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		String defaultValue = UUID.randomUUID().toString();
 
-		assertEquals(defaultValue, implementation.getStringOrDefault(propertyKey, defaultValue));
+		assertEquals(defaultValue, implementation._getStringOrDefault(propertyKey, defaultValue));
 	}
 	//endregion
 
@@ -52,9 +52,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		int propertyValue = Integer.MAX_VALUE;
 
-		implementation.setInt(propertyKey, propertyValue);
+		implementation._setInt(propertyKey, propertyValue);
 
-		int result = implementation.getInt(propertyKey);
+		int result = implementation._getInt(propertyKey);
 
 		assertEquals(propertyValue, result);
 	}
@@ -65,9 +65,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		int propertyValue = Integer.MAX_VALUE;
 
-		implementation.setInt(propertyKey, propertyValue);
+		implementation._setInt(propertyKey, propertyValue);
 
-		assertEquals(propertyValue, implementation.getIntOrDefault(propertyKey, 0));
+		assertEquals(propertyValue, implementation._getIntOrDefault(propertyKey, 0));
 	}
 
 	public abstract void testGetIntOrDefault_Default();
@@ -76,7 +76,7 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		int defaultValue = Integer.MAX_VALUE;
 
-		assertEquals(defaultValue, implementation.getIntOrDefault(propertyKey, defaultValue));
+		assertEquals(defaultValue, implementation._getIntOrDefault(propertyKey, defaultValue));
 	}
 	//endregion
 
@@ -87,9 +87,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		long propertyValue = Long.MAX_VALUE;
 
-		implementation.setLong(propertyKey, propertyValue);
+		implementation._setLong(propertyKey, propertyValue);
 
-		long result = implementation.getLong(propertyKey);
+		long result = implementation._getLong(propertyKey);
 
 		assertEquals(propertyValue, result);
 	}
@@ -100,9 +100,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		long propertyValue = Long.MAX_VALUE;
 
-		implementation.setLong(propertyKey, propertyValue);
+		implementation._setLong(propertyKey, propertyValue);
 
-		assertEquals(propertyValue, implementation.getLongOrDefault(propertyKey, 0));
+		assertEquals(propertyValue, implementation._getLongOrDefault(propertyKey, 0));
 	}
 
 	public abstract void testGetLongOrDefault_Default();
@@ -111,7 +111,7 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		long defaultValue = Long.MAX_VALUE;
 
-		assertEquals(defaultValue, implementation.getLongOrDefault(propertyKey, defaultValue));
+		assertEquals(defaultValue, implementation._getLongOrDefault(propertyKey, defaultValue));
 	}
 	//endregion
 
@@ -122,9 +122,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		boolean propertyValue = true;
 
-		implementation.setBool(propertyKey, propertyValue);
+		implementation._setBool(propertyKey, propertyValue);
 
-		boolean result = implementation.getBool(propertyKey);
+		boolean result = implementation._getBool(propertyKey);
 
 		assertEquals(propertyValue, result);
 	}
@@ -135,9 +135,9 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		boolean propertyValue = true;
 
-		implementation.setBool(propertyKey, propertyValue);
+		implementation._setBool(propertyKey, propertyValue);
 
-		assertEquals(propertyValue, implementation.getBoolOrDefault(propertyKey, false));
+		assertEquals(propertyValue, implementation._getBoolOrDefault(propertyKey, false));
 	}
 
 	public abstract void testGetBoolOrDefault_Default();
@@ -146,7 +146,7 @@ public abstract class PropertyEditorTestParent {
 		String propertyKey = UUID.randomUUID().toString();
 		boolean defaultValue = true;
 
-		assertEquals(defaultValue, implementation.getBoolOrDefault(propertyKey, defaultValue));
+		assertEquals(defaultValue, implementation._getBoolOrDefault(propertyKey, defaultValue));
 	}
 	//endregion
 }

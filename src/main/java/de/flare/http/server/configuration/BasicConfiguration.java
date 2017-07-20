@@ -50,15 +50,15 @@ public class BasicConfiguration implements WebServerConfiguration {
 		WebServerConfiguration configuration = new BasicConfiguration();
 
 		return configuration
-				.setAllowedOrigins(propertyEditor.getStringOrDefault(ALLOWED_ORIGINS_PROPERTY_KEY, "*"))
-				.setAllowedMethods(propertyEditor.getStringOrDefault(ALLOWED_METHODS_PROPERTY_KEY, "*"))
-				.setPort(propertyEditor.getIntOrDefault(PORT_PROPERTY_KEY, MIN_PORT))
-				.setThreadPoolSize(propertyEditor.getIntOrDefault(THREADS_PROPERTY_KEY, MIN_THREADS))
-				.setStaticFileLocation(propertyEditor.getStringOrDefault(STATIC_FILE_LOCATION_PROPERTY_KEY, "/public"))
-				.setKeyStoreLocations(propertyEditor.getStringOrDefault(KEY_STORE_LOCATION_PROPERTY_KEY, ""))
-				.setKeyStorePassword(propertyEditor.getStringOrDefault(KEY_STORE_PASSWORD_PROPERTY_KEY, ""))
-				.setTrustStoreLocation(propertyEditor.getStringOrDefault(TRUST_STORE_LOCATION_PROPERTY_KEY, null))
-				.setTrustStorePassword(propertyEditor.getStringOrDefault(TRUST_STORE_PASSWORD_PROPERTY_KEY, null));
+				.setAllowedOrigins(propertyEditor._getStringOrDefault(ALLOWED_ORIGINS_PROPERTY_KEY, "*"))
+				.setAllowedMethods(propertyEditor._getStringOrDefault(ALLOWED_METHODS_PROPERTY_KEY, "*"))
+				.setPort(propertyEditor._getIntOrDefault(PORT_PROPERTY_KEY, MIN_PORT))
+				.setThreadPoolSize(propertyEditor._getIntOrDefault(THREADS_PROPERTY_KEY, MIN_THREADS))
+				.setStaticFileLocation(propertyEditor._getStringOrDefault(STATIC_FILE_LOCATION_PROPERTY_KEY, "/public"))
+				.setKeyStoreLocations(propertyEditor._getStringOrDefault(KEY_STORE_LOCATION_PROPERTY_KEY, ""))
+				.setKeyStorePassword(propertyEditor._getStringOrDefault(KEY_STORE_PASSWORD_PROPERTY_KEY, ""))
+				.setTrustStoreLocation(propertyEditor._getStringOrDefault(TRUST_STORE_LOCATION_PROPERTY_KEY, null))
+				.setTrustStorePassword(propertyEditor._getStringOrDefault(TRUST_STORE_PASSWORD_PROPERTY_KEY, null));
 	}
 	//endregion
 

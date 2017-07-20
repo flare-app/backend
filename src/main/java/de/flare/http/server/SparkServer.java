@@ -15,6 +15,7 @@ import de.flare.http.route.execution.RestRouteHandler;
 import de.flare.http.route.parameter.UriParameter;
 import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 import de.flare.http.server.configuration.WebServerConfiguration;
+import de.flare.logging.Logger;
 import de.flare.logging.SimpleLogger;
 import spark.Request;
 import spark.Response;
@@ -119,7 +120,7 @@ public class SparkServer implements WebServer {
 				break;
 
 			default:
-				SimpleLogger.error(getClass(), "unsupported rest method: '" + restRoute.getMethod().toString() + "'");
+				Logger.error(getClass(), "unsupported rest method: '" + restRoute.getMethod().toString() + "'");
 		}
 
 		return this;
@@ -185,7 +186,7 @@ public class SparkServer implements WebServer {
 			response.body(e.getRestResponse().getBody());
 			response.status(e.getRestResponse().getStatus());
 		} catch (Exception e) {
-			SimpleLogger.error(getClass(), "error while executing request: " + route.getUri(), e);
+			Logger.error(getClass(), "error while executing request: " + route.getUri(), e);
 			response.body(e.getMessage());
 			response.status(StatusCodes.ERROR);
 		}

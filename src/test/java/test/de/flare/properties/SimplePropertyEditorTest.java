@@ -1,5 +1,6 @@
 package test.de.flare.properties;
 
+import de.flare.properties.PropertyEditor;
 import de.flare.properties.SimplePropertyEditor;
 import org.junit.Test;
 
@@ -9,19 +10,22 @@ public class SimplePropertyEditorTest extends PropertyEditorTestParent {
 	@Test
 	@Override
 	public void testSetString() {
-		testSetString(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testSetString(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetStringOrDefault() {
-		testGetStringOrDefault(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetStringOrDefault(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetStringOrDefault_Default() {
-		testGetStringOrDefault_Default(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetStringOrDefault_Default(implementation);
 	}
 	//endregion
 
@@ -29,19 +33,22 @@ public class SimplePropertyEditorTest extends PropertyEditorTestParent {
 	@Test
 	@Override
 	public void testSetInt() {
-		testSetInt(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testSetInt(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetIntOrDefault() {
-		testGetIntOrDefault(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetIntOrDefault(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetIntOrDefault_Default() {
-		testGetIntOrDefault_Default(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetIntOrDefault_Default(implementation);
 	}
 	//endregion
 
@@ -49,19 +56,22 @@ public class SimplePropertyEditorTest extends PropertyEditorTestParent {
 	@Test
 	@Override
 	public void testSetLong() {
-		testSetLong(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testSetLong(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetLongOrDefault() {
-		testGetLongOrDefault(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetLongOrDefault(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetLongOrDefault_Default() {
-		testGetLongOrDefault_Default(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetLongOrDefault_Default(implementation);
 	}
 	//endregion
 
@@ -69,19 +79,22 @@ public class SimplePropertyEditorTest extends PropertyEditorTestParent {
 	@Test
 	@Override
 	public void testSetBool() {
-		testSetBool(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testSetBool(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetBoolOrDefault() {
-		testGetBoolOrDefault(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetBoolOrDefault(implementation);
 	}
 
 	@Test
 	@Override
 	public void testGetBoolOrDefault_Default() {
-		testGetBoolOrDefault_Default(SimplePropertyEditor.getInstance());
+		PropertyEditor implementation = new SimplePropertyEditor();
+		testGetBoolOrDefault_Default(implementation);
 	}
 	//endregion
 }

@@ -1,7 +1,7 @@
 package de.flare.properties;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.core.FlareBackend_v1;
+import de.flare.logging.Logger;
 import de.flare.logging.SimpleLogger;
 
 import java.io.IOException;
@@ -28,14 +28,6 @@ public class SimplePropertyEditor implements PropertyEditor {
 	public SimplePropertyEditor() {
 		loadProperties();
 	}
-
-	/**
-	 * This method returns the flare backend instance of this class.
-	 * @return the flare backend instance of this class
-	 */
-	public static PropertyEditor getInstance() {
-		return FlareBackend_v1.getInstance().getPropertyEditor();
-	}
 	//endregion
 
 	//region property editor
@@ -43,15 +35,15 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getString(@NotNull String propertyKey) {
-		return getStringOrDefault(propertyKey, "");
+	public String _getString(@NotNull String propertyKey) {
+		return _getStringOrDefault(propertyKey, "");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getStringOrDefault(@NotNull String propertyKey, String defaultValue) {
+	public String _getStringOrDefault(@NotNull String propertyKey, String defaultValue) {
 		return properties.getOrDefault(propertyKey, defaultValue);
 	}
 
@@ -59,16 +51,15 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@NotNull
-	public int getInt(@NotNull String propertyKey) {
-		return getIntOrDefault(propertyKey, 0);
+	public int _getInt(@NotNull String propertyKey) {
+		return _getIntOrDefault(propertyKey, 0);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getIntOrDefault(@NotNull String propertyKey, int defaultValue) {
+	public int _getIntOrDefault(@NotNull String propertyKey, int defaultValue) {
 		return get(propertyKey, Integer::parseInt, defaultValue);
 	}
 
@@ -76,16 +67,15 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@NotNull
-	public long getLong(@NotNull String propertyKey) {
-		return getLongOrDefault(propertyKey, 0);
+	public long _getLong(@NotNull String propertyKey) {
+		return _getLongOrDefault(propertyKey, 0);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public long getLongOrDefault(@NotNull String propertyKey, long defaultValue) {
+	public long _getLongOrDefault(@NotNull String propertyKey, long defaultValue) {
 		return get(propertyKey, Long::parseLong, defaultValue);
 	}
 
@@ -93,16 +83,15 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	@NotNull
-	public boolean getBool(@NotNull String propertyKey) {
-		return getBoolOrDefault(propertyKey, false);
+	public boolean _getBool(@NotNull String propertyKey) {
+		return _getBoolOrDefault(propertyKey, false);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean getBoolOrDefault(@NotNull String propertyKey, boolean defaultValue) {
+	public boolean _getBoolOrDefault(@NotNull String propertyKey, boolean defaultValue) {
 		return get(propertyKey, (String value) -> {
 			if (value.equalsIgnoreCase("false") || value.equalsIgnoreCase("true")) {
 				return Boolean.parseBoolean(value);
@@ -117,7 +106,7 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setString(@NotNull String propertyKey, String propertyValue) {
+	public PropertyEditor _setString(@NotNull String propertyKey, String propertyValue) {
 		return set(propertyKey, propertyValue, (String value) -> value);
 	}
 
@@ -126,7 +115,7 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setInt(@NotNull String propertyKey, int propertyValue) {
+	public PropertyEditor _setInt(@NotNull String propertyKey, int propertyValue) {
 		return set(propertyKey, propertyValue, (Integer value) -> Integer.toString(value));
 	}
 
@@ -135,7 +124,7 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setLong(@NotNull String propertyKey, long propertyValue) {
+	public PropertyEditor _setLong(@NotNull String propertyKey, long propertyValue) {
 		return set(propertyKey, propertyValue, (Long value) -> Long.toString(value));
 	}
 
@@ -144,7 +133,7 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 */
 	@Override
 	@NotNull
-	public PropertyEditor setBool(@NotNull String propertyKey, boolean propertyValue) {
+	public PropertyEditor _setBool(@NotNull String propertyKey, boolean propertyValue) {
 		return set(propertyKey, propertyValue, (Boolean value) -> Boolean.toString(value));
 	}
 
@@ -163,10 +152,10 @@ public class SimplePropertyEditor implements PropertyEditor {
 			try {
 				properties.load(inputStream);
 			} catch (IOException e) {
-				SimpleLogger.error(getClass(), "cannot read from properties file", e);
+				Logger.error(getClass(), "cannot read from properties file", e);
 			}
 		} else {
-			SimpleLogger.info(getClass(), "cannot find properties file");
+			Logger.info(getClass(), "cannot find properties file");
 		}
 
 		for (Object key : properties.keySet()) {
@@ -183,7 +172,7 @@ public class SimplePropertyEditor implements PropertyEditor {
 	 * @return the converted property value
 	 */
 	private <Type> Type get(String propertyKey, Function<String, Type> converter, Type defaultValue) {
-		String value = getStringOrDefault(propertyKey, null);
+		String value = _getStringOrDefault(propertyKey, null);
 
 		try {
 			return converter.apply(value);
@@ -206,7 +195,7 @@ public class SimplePropertyEditor implements PropertyEditor {
 		try {
 			properties.put(propertyKey, converter.apply(propertyValue));
 		} catch (Exception e) {
-			SimpleLogger.error(getClass(), "cannot set property '" + propertyKey + "'", e);
+			Logger.error(getClass(), "cannot set property '" + propertyKey + "'", e);
 		}
 
 		return this;

@@ -1,6 +1,7 @@
 package de.flare.core;
 
 
+import de.flare.properties.PropertyEditor;
 import de.flare.properties.SimplePropertyEditor;
 
 /**
@@ -45,7 +46,7 @@ public final class Application {
 				continue;
 			}
 
-			SimplePropertyEditor.getInstance().setString(splitArg[0], splitArg[1]);
+			PropertyEditor.setString(splitArg[0], splitArg[1]);
 		}
 	}
 	//endregion

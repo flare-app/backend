@@ -125,7 +125,9 @@ public class SimpleAuthorizationGroup implements AuthorizationGroup {
 	 */
 	@Override
 	public boolean canAccess(@NotNull User user) {
-		return users.contains(user) || !Collections.disjoint(authentications, user.getAuthentications());
+		// TODO: implement me
+		return false;
+		//return users.contains(user) || !Collections.disjoint(authentications, user.getAuthentications());
 	}
 
 	//endregion

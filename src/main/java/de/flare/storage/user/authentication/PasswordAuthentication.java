@@ -2,6 +2,7 @@ package de.flare.storage.user.authentication;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.properties.SimplePropertyEditor;
+import de.flare.storage.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,12 +66,13 @@ public final class PasswordAuthentication {
 
 	/**
 	 * This method checks, whether a given password will match a given hash.
+	 * @param user the user, to whom the password belongs
 	 * @param password the password to validate
 	 * @param token the token to compare the password with
 	 * @return true, if the password produces the given hash
 	 * @throws IllegalStateException thrown, if the hash can not be computed
 	 */
-	public static boolean matches(@NotNull String password, @NotNull String token) throws IllegalStateException {
+	public static boolean matches(@NotNull User user, @NotNull String password, @NotNull String token) throws IllegalStateException {
 		String[] tokenSplit = token.split(PasswordService.TOKEN_SEPARATOR);
 
 		if (tokenSplit.length < 2) {
@@ -78,9 +80,17 @@ public final class PasswordAuthentication {
 		}
 
 		for (Map.Entry<PasswordServiceType, PasswordService> entry : passwordServices.entrySet()) {
-			if (entry.getValue().getServiceId().equals(tokenSplit[0])) {
-				return entry.getValue().matches(password, token);
+			if (!entry.getValue().getServiceId().equals(tokenSplit[0])) {
+				continue;
 			}
+
+			boolean matches = entry.getValue().matches(password, token);
+
+			if (matches && entry.getValue() != getDefaultService()) {
+				// TODO: re-compute the password token for this user
+			}
+
+			return matches;
 		}
 
 		throw new IllegalStateException("unknown password service id");

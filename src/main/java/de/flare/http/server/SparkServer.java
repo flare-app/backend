@@ -1,6 +1,7 @@
 package de.flare.http.server;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.api.endpoint.RestEndpoint;
 import de.flare.http.definition.StatusCodes;
 import de.flare.http.exception.HttpException;
 import de.flare.http.exception.WebServerAlreadyRunningException;
@@ -19,6 +20,8 @@ import spark.Request;
 import spark.Response;
 import spark.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -29,6 +32,7 @@ public class SparkServer implements WebServer {
 
 	//region private members
 	private Service sparkService;
+	private Collection<RestEndpoint> endpoints = new ArrayList<>();
 	//endregion
 
 	//region ctor
@@ -120,6 +124,16 @@ public class SparkServer implements WebServer {
 
 		return this;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@NotNull
+	public Collection<RestEndpoint> getEndpoints() {
+		return endpoints;
+	}
+
 	//endregion
 
 	//region private methods

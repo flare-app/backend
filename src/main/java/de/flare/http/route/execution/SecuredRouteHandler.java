@@ -15,7 +15,6 @@ public class SecuredRouteHandler implements RestRouteHandler {
 	//endregion
 
 	//region rest route handler
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -23,6 +22,5 @@ public class SecuredRouteHandler implements RestRouteHandler {
 	public void handle(@NotNull RestRoute route, @NotNull RestRequest request, @NotNull RestResponse response) {
 
 	}
-
 	//endregion
 }

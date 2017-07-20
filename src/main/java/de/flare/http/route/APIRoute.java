@@ -7,7 +7,6 @@ import de.flare.storage.user.authentication.SimpleAuthenticationGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * {@inheritDoc}
@@ -130,7 +129,7 @@ public class APIRoute implements RestRoute {
 	@Override
 	@NotNull
 	public Collection<UriParameter> getParameters() {
-		return Collections.unmodifiableCollection(parameters);
+		return parameters;
 	}
 
 	/**

@@ -1,9 +1,11 @@
 package de.flare.storage.user.authentication;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.storage.user.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * {@inheritDoc}
@@ -13,6 +15,7 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 
 	//region private members
 	private Collection<UserAuthentication> authentications = new ArrayList<>();
+	private Collection<User> users = new ArrayList<>();
 	//endregion
 
 	//region ctor
@@ -42,11 +45,28 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	@Override
 	public AuthenticationGroup add(@NotNull UserAuthentication... authentications) {
 		for (UserAuthentication authentication : authentications) {
-			if (contains(authentication)) {
+			if (this.authentications.contains(authentication)) {
 				continue;
 			}
 
 			this.authentications.add(authentication);
+		}
+
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@NotNull
+	@Override
+	public AuthenticationGroup add(@NotNull User... users) {
+		for (User user : users) {
+			if (this.users.contains(user)) {
+				continue;
+			}
+
+			this.users.add(user);
 		}
 
 		return this;
@@ -69,8 +89,13 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean contains(@NotNull UserAuthentication authentication) {
-		return authentications.contains(authentication);
+	@NotNull
+	public AuthenticationGroup remove(@NotNull User... users) {
+		for (User user : users) {
+			this.users.remove(user);
+		}
+
+		return this;
 	}
 
 	/**
@@ -83,5 +108,25 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 		add(authentications);
 		return this;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@NotNull
+	@Override
+	public AuthenticationGroup set(@NotNull User... users) {
+		this.users.clear();
+		add(users);
+		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean canAccess(@NotNull User user) {
+		return users.contains(user) || !Collections.disjoint(authentications, user.getAuthentications());
+	}
+
 	//endregion
 }

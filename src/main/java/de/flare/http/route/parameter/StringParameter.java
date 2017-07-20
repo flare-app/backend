@@ -5,7 +5,6 @@ import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * This is the string uri parameter implementation.
@@ -64,7 +63,7 @@ public class StringParameter implements UriParameter {
 	@Override
 	@NotNull
 	public Collection<UriParameterConstraint> getConstraints() {
-		return Collections.unmodifiableCollection(constraints);
+		return constraints;
 	}
 
 	/**

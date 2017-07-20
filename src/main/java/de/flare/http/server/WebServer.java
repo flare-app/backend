@@ -1,11 +1,14 @@
 package de.flare.http.server;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.http.api.endpoint.RestEndpoint;
 import de.flare.http.exception.WebServerAlreadyRunningException;
 import de.flare.http.exception.WebServerNotRunningException;
 import de.flare.http.route.RestRoute;
 import de.flare.http.route.execution.RestRouteHandler;
 import de.flare.http.server.configuration.WebServerConfiguration;
+
+import java.util.Collection;
 
 /**
  * This interface offers methods for web server management.
@@ -37,4 +40,11 @@ public interface WebServer {
 	 */
 	@NotNull
 	WebServer add(@NotNull RestRoute restRoute, @NotNull RestRouteHandler handler) throws WebServerNotRunningException;
+
+	/**
+	 * This method returns a list of all rest endpoints, which are registered in this web server.
+	 * @return a list of all rest endpoints
+	 */
+	@NotNull
+	Collection<RestEndpoint> getEndpoints();
 }

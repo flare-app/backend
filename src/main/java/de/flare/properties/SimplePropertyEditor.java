@@ -1,6 +1,7 @@
 package de.flare.properties;
 
 import com.sun.istack.internal.NotNull;
+import de.flare.core.FlareBackend_v1;
 import de.flare.logging.SimpleLogger;
 
 import java.io.IOException;
@@ -14,33 +15,27 @@ import java.util.function.Function;
  * {@inheritDoc}
  * This is a simple implementation.
  */
-public final class SimplePropertyEditor implements PropertyEditor {
-
-	//region singleton
-	private static PropertyEditor instance;
-
-	/**
-	 * This method returns the singleton instance of thic class.
-	 * @return the singleton instance of this class
-	 */
-	public static PropertyEditor getInstance() {
-		if (instance == null) {
-			instance = new SimplePropertyEditor();
-		}
-
-		return instance;
-	}
-
-	/**
-	 * This constructor loads the properties from the properties-file.
-	 */
-	private SimplePropertyEditor() {
-		loadProperties();
-	}
-	//endregion
+public class SimplePropertyEditor implements PropertyEditor {
 
 	//region private members
 	private Map<String, String> properties = new HashMap<>();
+	//endregion
+
+	//region ctor
+	/**
+	 * This constructor loads all properties from the properties-file.
+	 */
+	public SimplePropertyEditor() {
+		loadProperties();
+	}
+
+	/**
+	 * This method returns the flare backend instance of this class.
+	 * @return the flare backend instance of this class
+	 */
+	public static PropertyEditor getInstance() {
+		return FlareBackend_v1.getInstance().getPropertyEditor();
+	}
 	//endregion
 
 	//region property editor

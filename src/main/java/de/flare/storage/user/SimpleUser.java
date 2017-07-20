@@ -2,12 +2,11 @@ package de.flare.storage.user;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.storage.AbstractDatabaseEntry;
-import de.flare.storage.user.authentication.PasswordAuthentication;
+import de.flare.storage.user.authentication.SimplePasswordServiceContainer;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * {@inheritDoc}
@@ -57,7 +56,7 @@ public class SimpleUser extends AbstractDatabaseEntry implements User {
 	@Override
 	@NotNull
 	public User setPassword(@NotNull String password) throws IllegalStateException {
-		passwordToken = PasswordAuthentication.getPasswordToken(password);
+		passwordToken = SimplePasswordServiceContainer.getPasswordToken(password);
 		return this;
 	}
 

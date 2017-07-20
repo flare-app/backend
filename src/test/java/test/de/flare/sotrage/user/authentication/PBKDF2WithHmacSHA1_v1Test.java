@@ -1,7 +1,7 @@
 package test.de.flare.sotrage.user.authentication;
 
-import de.flare.storage.user.authentication.PBKDF2WithHmacSHA1_v1;
-import de.flare.storage.user.authentication.PasswordService;
+import de.flare.storage.model.user.authentication.PBKDF2WithHmacSHA1_v1;
+import de.flare.storage.model.user.authentication.PasswordService;
 import org.junit.Test;
 
 public class PBKDF2WithHmacSHA1_v1Test extends PasswordServiceTestParent {

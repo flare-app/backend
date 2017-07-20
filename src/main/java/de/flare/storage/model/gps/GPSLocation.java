@@ -1,7 +1,7 @@
-package de.flare.storage.gps;
+package de.flare.storage.model.gps;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.storage.DatabaseEntry;
+import de.flare.storage.model.DatabaseEntry;
 
 /**
  * This interface contains gps coordinates.

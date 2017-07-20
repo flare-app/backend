@@ -5,9 +5,9 @@ import de.flare.logging.Logger;
 import de.flare.logging.SimpleLogger;
 import de.flare.properties.PropertyEditor;
 import de.flare.properties.SimplePropertyEditor;
-import de.flare.storage.user.authentication.PasswordServiceContainer;
-import de.flare.storage.user.authentication.PasswordServiceType;
-import de.flare.storage.user.authentication.SimplePasswordServiceContainer;
+import de.flare.storage.model.user.authentication.PasswordServiceContainer;
+import de.flare.storage.model.user.authentication.PasswordServiceType;
+import de.flare.storage.model.user.authentication.SimplePasswordServiceContainer;
 
 /**
  * This is the flare backend.

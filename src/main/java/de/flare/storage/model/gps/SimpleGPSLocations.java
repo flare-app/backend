@@ -1,6 +1,6 @@
-package de.flare.storage.gps;
+package de.flare.storage.model.gps;
 
-import de.flare.storage.AbstractDatabaseEntry;
+import de.flare.storage.model.AbstractDatabaseEntry;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

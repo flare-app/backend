@@ -1,4 +1,4 @@
-package de.flare.storage;
+package de.flare.storage.model;
 
 /**
  * This interface contains data for generic database entries.

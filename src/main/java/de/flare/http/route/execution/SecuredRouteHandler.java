@@ -4,7 +4,7 @@ import com.sun.istack.internal.NotNull;
 import de.flare.http.request.RestRequest;
 import de.flare.http.response.RestResponse;
 import de.flare.http.route.RestRoute;
-import de.flare.storage.user.User;
+import de.flare.storage.model.user.User;
 
 /**
  * {@inheritDoc}

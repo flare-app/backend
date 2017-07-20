@@ -1,4 +1,4 @@
-package de.flare.storage;
+package de.flare.storage.model;
 
 import javax.persistence.*;
 

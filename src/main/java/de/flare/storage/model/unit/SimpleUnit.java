@@ -1,8 +1,8 @@
-package de.flare.storage.unit;
+package de.flare.storage.model.unit;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.storage.AbstractDatabaseEntry;
-import de.flare.storage.user.User;
+import de.flare.storage.model.AbstractDatabaseEntry;
+import de.flare.storage.model.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

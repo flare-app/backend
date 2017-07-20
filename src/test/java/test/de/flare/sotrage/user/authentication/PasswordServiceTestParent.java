@@ -1,6 +1,6 @@
 package test.de.flare.sotrage.user.authentication;
 
-import de.flare.storage.user.authentication.PasswordService;
+import de.flare.storage.model.user.authentication.PasswordService;
 
 import java.util.UUID;
 

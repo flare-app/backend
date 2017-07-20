@@ -1,8 +1,8 @@
-package de.flare.storage.unit;
+package de.flare.storage.model.unit;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.storage.DatabaseEntry;
-import de.flare.storage.gps.GPSLocation;
+import de.flare.storage.model.DatabaseEntry;
+import de.flare.storage.model.gps.GPSLocation;
 
 /**
  * This interface contains data for unit locations.

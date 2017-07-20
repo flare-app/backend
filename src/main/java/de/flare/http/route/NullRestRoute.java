@@ -2,8 +2,8 @@ package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.http.route.parameter.UriParameter;
-import de.flare.storage.user.authorization.AuthorizationGroup;
-import de.flare.storage.user.authorization.SimpleAuthorizationGroup;
+import de.flare.storage.model.user.authorization.AuthorizationGroup;
+import de.flare.storage.model.user.authorization.SimpleAuthorizationGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;

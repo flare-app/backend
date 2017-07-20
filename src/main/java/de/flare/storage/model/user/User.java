@@ -1,7 +1,7 @@
-package de.flare.storage.user;
+package de.flare.storage.model.user;
 
 import com.sun.istack.internal.NotNull;
-import de.flare.storage.DatabaseEntry;
+import de.flare.storage.model.DatabaseEntry;
 
 import java.util.Collection;
 import java.util.UUID;

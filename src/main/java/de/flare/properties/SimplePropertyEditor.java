@@ -2,7 +2,6 @@ package de.flare.properties;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.logging.Logger;
-import de.flare.logging.SimpleLogger;
 
 import java.io.IOException;
 import java.io.InputStream;

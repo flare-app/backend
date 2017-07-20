@@ -24,7 +24,7 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 
 	//region private members
 	private SecureRandom random;
-	private int cost = DEFAULT_COST;
+	private int cost;
 	private Pattern hashLayout = Pattern.compile(getServiceId() + PasswordService.TOKEN_SEPARATOR + "(\\d\\d?)" + PasswordService.TOKEN_SEPARATOR + "(.{43})");
 	//endregion
 
@@ -32,7 +32,7 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	/**
 	 * The minimum recommended cost, used by default
 	 */
-	private static final int DEFAULT_COST = 16;
+	private static final int DEFAULT_COST_FACTOR = 50;
 	private static final int MIN_COST = 0;
 	private static final int MAX_COST = 31;
 
@@ -46,16 +46,16 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	 * This constructor initializes the password service with its default costs.
 	 */
 	public PBKDF2WithHmacSHA1_v1() {
-		this(DEFAULT_COST);
+		this(DEFAULT_COST_FACTOR);
 	}
 
 	/**
 	 * This constructor sets the costs for this password service.
-	 * @param cost the costs
+	 * @param costFactor the cost factor [0..100]
 	 */
-	public PBKDF2WithHmacSHA1_v1(int cost)
+	public PBKDF2WithHmacSHA1_v1(int costFactor)
 	{
-		this.cost = Math.min(MAX_COST, Math.max(MIN_COST, cost));
+		this.cost = cost(costFactor);
 		this.random = new SecureRandom();
 	}
 	//endregion
@@ -116,9 +116,20 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	 * @param cost the costs for the algorithm
 	 * @return the amount of iterations to perform
 	 */
-	private static int iterations(int cost)
+	private int iterations(int cost)
 	{
 		return 1 << Math.min(MAX_COST, Math.max(MIN_COST, cost));
+	}
+
+	/**
+	 * This method calculates the cost, given a certain cost factor.
+	 * @param costFactor the cost factor
+	 * @return the actual cost
+	 */
+	private int cost(int costFactor) {
+		costFactor = Math.min(100, Math.max(0, costFactor));
+
+		return Math.round((1 + MAX_COST - MIN_COST) * (costFactor / 100.0f));
 	}
 
 	/**

@@ -16,7 +16,6 @@ import de.flare.http.route.parameter.UriParameter;
 import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 import de.flare.http.server.configuration.WebServerConfiguration;
 import de.flare.logging.Logger;
-import de.flare.logging.SimpleLogger;
 import spark.Request;
 import spark.Response;
 import spark.Service;

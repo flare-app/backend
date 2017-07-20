@@ -2,7 +2,6 @@ package de.flare.core;
 
 
 import de.flare.properties.PropertyEditor;
-import de.flare.properties.SimplePropertyEditor;
 
 /**
  * This class contains the main entry point for the flare backend.

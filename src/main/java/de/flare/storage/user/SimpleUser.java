@@ -3,7 +3,6 @@ package de.flare.storage.user;
 import com.sun.istack.internal.NotNull;
 import de.flare.storage.AbstractDatabaseEntry;
 import de.flare.storage.user.authentication.PasswordServiceContainer;
-import de.flare.storage.user.authentication.SimplePasswordServiceContainer;
 
 import javax.persistence.*;
 import java.util.ArrayList;

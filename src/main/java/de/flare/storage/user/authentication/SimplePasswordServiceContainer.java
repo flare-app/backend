@@ -2,7 +2,6 @@ package de.flare.storage.user.authentication;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.properties.PropertyEditor;
-import de.flare.properties.SimplePropertyEditor;
 import de.flare.storage.user.User;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 	//endregion
 
 	//region private const
-	private static final String PASSWORD_HASH_COST_PROPERTY_KEY = "flareBackendUserPasswordHashCost";
+	private static final String PASSWORD_HASH_COST_FACTOR_PROPERTY_KEY = "flareBackendUserPasswordHashCostFactor";
 	//endregion
 
 	//region ctor
@@ -29,13 +28,13 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 	public SimplePasswordServiceContainer(@NotNull PasswordServiceType defaultServiceType) {
 		this.defaultServiceType = defaultServiceType;
 
-		String costString = PropertyEditor.getString(PASSWORD_HASH_COST_PROPERTY_KEY);
+		String costString = PropertyEditor.getString(PASSWORD_HASH_COST_FACTOR_PROPERTY_KEY);
 
 		boolean useDefaultCost = true;
-		int cost = 0;
+		int costFactor = 0;
 
 		try {
-			cost = Integer.parseInt(costString);
+			costFactor = Integer.parseInt(costString);
 			useDefaultCost = false;
 		} catch (Exception e) {
 			// suppress exception
@@ -44,7 +43,7 @@ public class SimplePasswordServiceContainer implements PasswordServiceContainer 
 		if (useDefaultCost) {
 			passwordServices.put(PasswordServiceType.PBKDF2WithHmacSHA1_v1, new PBKDF2WithHmacSHA1_v1());
 		} else {
-			passwordServices.put(PasswordServiceType.PBKDF2WithHmacSHA1_v1, new PBKDF2WithHmacSHA1_v1(cost));
+			passwordServices.put(PasswordServiceType.PBKDF2WithHmacSHA1_v1, new PBKDF2WithHmacSHA1_v1(costFactor));
 		}
 	}
 	//endregion

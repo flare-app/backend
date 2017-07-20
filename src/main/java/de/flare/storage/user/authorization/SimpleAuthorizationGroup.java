@@ -5,7 +5,6 @@ import de.flare.storage.user.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * {@inheritDoc}

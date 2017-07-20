@@ -2,8 +2,8 @@ package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.http.route.parameter.UriParameter;
-import de.flare.storage.user.authentication.AuthenticationGroup;
-import de.flare.storage.user.authentication.SimpleAuthenticationGroup;
+import de.flare.storage.user.authorization.AuthorizationGroup;
+import de.flare.storage.user.authorization.SimpleAuthorizationGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +17,7 @@ public class APIRoute implements RestRoute {
 	private RequestMethod method = RequestMethod.GET;
 	private String uri = "";
 	private Collection<UriParameter> parameters = new ArrayList<>();
-	private AuthenticationGroup accessGroup = SimpleAuthenticationGroup.AUTHENTICATED;
+	private AuthorizationGroup accessGroup = SimpleAuthorizationGroup.AUTHENTICATED;
 	//endregion
 
 	//region ctor
@@ -33,7 +33,7 @@ public class APIRoute implements RestRoute {
 	 * This constructor sets the access levels for this rest route.
 	 * @param accessGroup the group of users, who may access this route
 	 */
-	public APIRoute(@NotNull AuthenticationGroup accessGroup) {
+	public APIRoute(@NotNull AuthorizationGroup accessGroup) {
 		this.accessGroup = accessGroup;
 	}
 
@@ -42,7 +42,7 @@ public class APIRoute implements RestRoute {
 	 * @param accessGroup the group of users, who have access to this route
 	 * @return the route
 	 */
-	public static RestRoute get(@NotNull AuthenticationGroup accessGroup) {
+	public static RestRoute get(@NotNull AuthorizationGroup accessGroup) {
 		return new APIRoute(accessGroup).setMethod(RequestMethod.GET);
 	}
 
@@ -51,7 +51,7 @@ public class APIRoute implements RestRoute {
 	 * @param accessGroup the group of users, who have access to this route
 	 * @return the route
 	 */
-	public static RestRoute post(@NotNull AuthenticationGroup accessGroup) {
+	public static RestRoute post(@NotNull AuthorizationGroup accessGroup) {
 		return new APIRoute(accessGroup).setMethod(RequestMethod.POST);
 	}
 
@@ -60,7 +60,7 @@ public class APIRoute implements RestRoute {
 	 * @param accessGroup the group of users, who have access to this route
 	 * @return the route
 	 */
-	public static RestRoute put(@NotNull AuthenticationGroup accessGroup) {
+	public static RestRoute put(@NotNull AuthorizationGroup accessGroup) {
 		return new APIRoute(accessGroup).setMethod(RequestMethod.PUT);
 	}
 
@@ -69,7 +69,7 @@ public class APIRoute implements RestRoute {
 	 * @param accessGroup the group of users, who have access to this route
 	 * @return the route
 	 */
-	public static RestRoute delete(@NotNull AuthenticationGroup accessGroup) {
+	public static RestRoute delete(@NotNull AuthorizationGroup accessGroup) {
 		return new APIRoute(accessGroup).setMethod(RequestMethod.DELETE);
 	}
 	//endregion
@@ -137,7 +137,7 @@ public class APIRoute implements RestRoute {
 	 */
 	@Override
 	@NotNull
-	public AuthenticationGroup getAccessGroup() {
+	public AuthorizationGroup getAccessGroup() {
 		return accessGroup;
 	}
 	//endregion

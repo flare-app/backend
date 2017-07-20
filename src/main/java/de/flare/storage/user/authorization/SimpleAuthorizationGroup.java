@@ -1,4 +1,4 @@
-package de.flare.storage.user.authentication;
+package de.flare.storage.user.authorization;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.storage.user.User;
@@ -11,10 +11,10 @@ import java.util.Collections;
  * {@inheritDoc}
  * This is a simple implementation.
  */
-public class SimpleAuthenticationGroup implements AuthenticationGroup {
+public class SimpleAuthorizationGroup implements AuthorizationGroup {
 
 	//region private members
-	private Collection<UserAuthentication> authentications = new ArrayList<>();
+	private Collection<UserAuthorization> authentications = new ArrayList<>();
 	private Collection<User> users = new ArrayList<>();
 	//endregion
 
@@ -22,29 +22,29 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	//endregion
 
 	//region public const
-	public static final AuthenticationGroup NOONE = new SimpleAuthenticationGroup();
+	public static final AuthorizationGroup NOONE = new SimpleAuthorizationGroup();
 
-	public static final AuthenticationGroup PUBLIC = new SimpleAuthenticationGroup()
-			.add(UserAuthentication.values())
-			.remove(UserAuthentication.NONE);
+	public static final AuthorizationGroup PUBLIC = new SimpleAuthorizationGroup()
+			.add(UserAuthorization.values())
+			.remove(UserAuthorization.NONE);
 
-	public static final AuthenticationGroup AUTHENTICATED = new SimpleAuthenticationGroup()
+	public static final AuthorizationGroup AUTHENTICATED = new SimpleAuthorizationGroup()
 			.add(
-					UserAuthentication.APP,
-					UserAuthentication.DASHBOARD,
-					UserAuthentication.LOCAL_ADMINISTRATOR,
-					UserAuthentication.FLARE_ADMINISTRATOR
+					UserAuthorization.APP,
+					UserAuthorization.DASHBOARD,
+					UserAuthorization.LOCAL_ADMINISTRATOR,
+					UserAuthorization.FLARE_ADMINISTRATOR
 			);
 	//endregion
 
-	//region authentication group
+	//region authorization group
 	/**
 	 * {@inheritDoc}
 	 */
 	@NotNull
 	@Override
-	public AuthenticationGroup add(@NotNull UserAuthentication... authentications) {
-		for (UserAuthentication authentication : authentications) {
+	public AuthorizationGroup add(@NotNull UserAuthorization... authentications) {
+		for (UserAuthorization authentication : authentications) {
 			if (this.authentications.contains(authentication)) {
 				continue;
 			}
@@ -60,7 +60,7 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	 */
 	@NotNull
 	@Override
-	public AuthenticationGroup add(@NotNull User... users) {
+	public AuthorizationGroup add(@NotNull User... users) {
 		for (User user : users) {
 			if (this.users.contains(user)) {
 				continue;
@@ -77,8 +77,8 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	 */
 	@Override
 	@NotNull
-	public AuthenticationGroup remove(@NotNull UserAuthentication... authentications) {
-		for (UserAuthentication authentication : authentications) {
+	public AuthorizationGroup remove(@NotNull UserAuthorization... authentications) {
+		for (UserAuthorization authentication : authentications) {
 			this.authentications.remove(authentication);
 		}
 
@@ -90,7 +90,7 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	 */
 	@Override
 	@NotNull
-	public AuthenticationGroup remove(@NotNull User... users) {
+	public AuthorizationGroup remove(@NotNull User... users) {
 		for (User user : users) {
 			this.users.remove(user);
 		}
@@ -103,7 +103,7 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	 */
 	@NotNull
 	@Override
-	public AuthenticationGroup set(@NotNull UserAuthentication... authentications) {
+	public AuthorizationGroup set(@NotNull UserAuthorization... authentications) {
 		this.authentications.clear();
 		add(authentications);
 		return this;
@@ -114,7 +114,7 @@ public class SimpleAuthenticationGroup implements AuthenticationGroup {
 	 */
 	@NotNull
 	@Override
-	public AuthenticationGroup set(@NotNull User... users) {
+	public AuthorizationGroup set(@NotNull User... users) {
 		this.users.clear();
 		add(users);
 		return this;

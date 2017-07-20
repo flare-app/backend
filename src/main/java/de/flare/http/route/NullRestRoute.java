@@ -2,8 +2,8 @@ package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.http.route.parameter.UriParameter;
-import de.flare.storage.user.authentication.AuthenticationGroup;
-import de.flare.storage.user.authentication.SimpleAuthenticationGroup;
+import de.flare.storage.user.authorization.AuthorizationGroup;
+import de.flare.storage.user.authorization.SimpleAuthorizationGroup;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,8 +74,8 @@ public class NullRestRoute implements RestRoute {
 	 */
 	@Override
 	@NotNull
-	public AuthenticationGroup getAccessGroup() {
-		return SimpleAuthenticationGroup.AUTHENTICATED;
+	public AuthorizationGroup getAccessGroup() {
+		return SimpleAuthorizationGroup.AUTHENTICATED;
 	}
 	//endregion
 }

@@ -2,7 +2,7 @@ package de.flare.http.route;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.http.route.parameter.UriParameter;
-import de.flare.storage.user.authentication.AuthenticationGroup;
+import de.flare.storage.user.authorization.AuthorizationGroup;
 
 import java.util.Collection;
 
@@ -61,5 +61,5 @@ public interface RestRoute {
 	 * @return the user group, which is allowed to access this route
 	 */
 	@NotNull
-	AuthenticationGroup getAccessGroup();
+	AuthorizationGroup getAccessGroup();
 }

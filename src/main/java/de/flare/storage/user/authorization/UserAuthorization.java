@@ -1,9 +1,9 @@
-package de.flare.storage.user.authentication;
+package de.flare.storage.user.authorization;
 
 /**
  * This enum contains all possible user authentications.
  */
-public enum UserAuthentication {
+public enum UserAuthorization {
 	NONE,
 	EXTERNAL,
 	DASHBOARD,

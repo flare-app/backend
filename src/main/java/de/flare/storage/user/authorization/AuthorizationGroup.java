@@ -1,62 +1,62 @@
-package de.flare.storage.user.authentication;
+package de.flare.storage.user.authorization;
 
 
 import com.sun.istack.internal.NotNull;
 import de.flare.storage.user.User;
 
 /**
- * This interface offers methods to manage authentication of users.
+ * This interface offers methods to manage authorization of users.
  */
-public interface AuthenticationGroup {
+public interface AuthorizationGroup {
 
 	/**
 	 * This method adds a collection of authentications to this group.
 	 * @param authentications a list of user authentications
-	 * @return this authentication group
+	 * @return this authorization group
 	 */
 	@NotNull
-	AuthenticationGroup add(@NotNull UserAuthentication... authentications);
+	AuthorizationGroup add(@NotNull UserAuthorization... authentications);
 
 	/**
-	 * This method adds a list of special users to this authentication group.
-	 * These users will get access, no matter what his authentication is.
+	 * This method adds a list of special users to this authorization group.
+	 * These users will get access, no matter what his authorization is.
 	 * @param users a list of users
-	 * @return this user authentication group
+	 * @return this user authorization group
 	 */
 	@NotNull
-	AuthenticationGroup add(@NotNull User... users);
+	AuthorizationGroup add(@NotNull User... users);
 
 	/**
 	 * This method removes a collection of authentications form the group.
 	 * @param authentications a list of user authentications
-	 * @return this authentication group
+	 * @return this authorization group
 	 */
 	@NotNull
-	AuthenticationGroup remove(@NotNull UserAuthentication... authentications);
+	AuthorizationGroup remove(@NotNull UserAuthorization... authentications);
 
 	/**
-	 * This method removes a list of users from this authentication group.
+	 * This method removes a list of users from this authorization group.
 	 * @param users a list of users to remove
-	 * @return this authentication group
+	 * @return this authorization group
 	 */
 	@NotNull
-	AuthenticationGroup remove(@NotNull User... users);
+	AuthorizationGroup remove(@NotNull User... users);
 
 	/**
 	 * This method overrides the user group with the given authentications.
 	 * @param authentications a list of user authentications
-	 * @return this authentication group
+	 * @return this authorization group
 	 */
 	@NotNull
-	AuthenticationGroup set(@NotNull UserAuthentication... authentications);
+	AuthorizationGroup set(@NotNull UserAuthorization... authentications);
 
 	/**
 	 * This method overrides the existing users, who have access to this group.
 	 * @param users the users to set
-	 * @return this user authentication group
+	 * @return this user authorization group
 	 */
 	@NotNull
-	AuthenticationGroup set(@NotNull User... users);
+	AuthorizationGroup set(@NotNull User... users);
 
 	/**
 	 * This method determines, whether a given user may access this group.

@@ -1,8 +1,8 @@
-package de.flare.storage.user.authorization;
+package de.flare.storage.model.user.authorization;
 
 
 import com.sun.istack.internal.NotNull;
-import de.flare.storage.user.User;
+import de.flare.storage.model.user.User;
 
 /**
  * This interface offers methods to manage authorization of users.

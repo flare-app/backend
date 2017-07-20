@@ -1,4 +1,4 @@
-package de.flare.storage.user.authorization;
+package de.flare.storage.model.user.authorization;
 
 /**
  * This enum contains all possible user authentications.

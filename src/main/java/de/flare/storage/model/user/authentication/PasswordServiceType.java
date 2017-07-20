@@ -1,4 +1,4 @@
-package de.flare.storage.user.authentication;
+package de.flare.storage.model.user.authentication;
 
 /**
  * This enum contains all types of password services.

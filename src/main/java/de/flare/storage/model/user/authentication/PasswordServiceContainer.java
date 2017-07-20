@@ -1,8 +1,8 @@
-package de.flare.storage.user.authentication;
+package de.flare.storage.model.user.authentication;
 
 import com.sun.istack.internal.NotNull;
 import de.flare.core.FlareBackend;
-import de.flare.storage.user.User;
+import de.flare.storage.model.user.User;
 
 /**
  * This interface contains a set of password services.

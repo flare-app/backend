@@ -1,4 +1,4 @@
-package de.flare.storage.user.authentication;
+package de.flare.storage.model.user.authentication;
 
 import com.sun.istack.internal.NotNull;
 

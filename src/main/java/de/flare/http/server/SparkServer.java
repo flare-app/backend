@@ -11,7 +11,9 @@ import de.flare.http.request.RestRequest;
 import de.flare.http.response.APIResponse;
 import de.flare.http.response.RestResponse;
 import de.flare.http.route.RestRoute;
+import de.flare.http.route.execution.RestRouteExecutionContext;
 import de.flare.http.route.execution.RestRouteHandler;
+import de.flare.http.route.execution.SimpleContext;
 import de.flare.http.route.parameter.UriParameter;
 import de.flare.http.route.parameter.exception.UriParameterInvalidException;
 import de.flare.http.server.configuration.WebServerConfiguration;
@@ -176,11 +178,14 @@ public class SparkServer implements WebServer {
 	 */
 	private void executeRequest(@NotNull RestRoute route, @NotNull RestRouteHandler handler, Request request, Response response) {
 		try {
-			RestRequest restRequest = convert(route, request);
-			RestResponse restResponse = convert(response);
+			RestRouteExecutionContext context = new SimpleContext()
+					.setRoute(route)
+					.setRequest(convert(route, request))
+					.setResponse(convert(response));
 
-			handler.handle(route, restRequest, restResponse);
-			fillResponse(response, restResponse);
+			handler.handle(context);
+
+			fillResponse(response, context);
 		} catch (HttpException e) {
 			response.body(e.getRestResponse().getBody());
 			response.status(e.getRestResponse().getStatus());
@@ -246,12 +251,12 @@ public class SparkServer implements WebServer {
 	/**
 	 * This method fills the given spark-response with the data from the given rest response.
 	 * @param response the spark response to fill
-	 * @param restResponse the rest response to take the data from
+	 * @param context the context, the route was executed in
 	 */
-	private void fillResponse(@NotNull Response response, @NotNull RestResponse restResponse) {
-		response.status(restResponse.getStatus());
-		response.body(restResponse.getBody());
-		response.type(restResponse.getContentType());
+	private void fillResponse(@NotNull Response response, @NotNull RestRouteExecutionContext context) {
+		response.status(context.getResponse().getStatus());
+		response.body(context.getResponse().getBody());
+		response.type(context.getResponse().getContentType());
 	}
 	//endregion
 }

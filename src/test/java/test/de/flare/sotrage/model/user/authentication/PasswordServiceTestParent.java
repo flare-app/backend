@@ -1,4 +1,4 @@
-package test.de.flare.sotrage.user.authentication;
+package test.de.flare.sotrage.model.user.authentication;
 
 import de.flare.storage.model.user.authentication.PasswordService;
 

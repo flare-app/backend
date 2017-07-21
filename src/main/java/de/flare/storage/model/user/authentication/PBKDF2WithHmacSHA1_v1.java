@@ -24,7 +24,7 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 
 	//region private members
 	private SecureRandom random;
-	private int cost;
+	private int shifts;
 	private Pattern hashLayout = Pattern.compile(getServiceId() + PasswordService.TOKEN_SEPARATOR + "(\\d\\d?)" + PasswordService.TOKEN_SEPARATOR + "(.{43})");
 	//endregion
 
@@ -33,8 +33,8 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	 * The minimum recommended cost, used by default
 	 */
 	private static final int DEFAULT_COST_FACTOR = 50;
-	private static final int MIN_COST = 0;
-	private static final int MAX_COST = 31;
+	private static final int MIN_SHIFTS = 0;
+	private static final int MAX_SHIFTS = 30;
 
 	private static final String ALGORITHM = "PBKDF2WithHmacSHA1";
 	private static final int SIZE = 128;
@@ -55,8 +55,8 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	 */
 	public PBKDF2WithHmacSHA1_v1(int costFactor)
 	{
-		this.cost = cost(costFactor);
-		this.random = new SecureRandom();
+		shifts = shifts(costFactor);
+		random = new SecureRandom();
 	}
 	//endregion
 
@@ -78,12 +78,12 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	public String getPasswordToken(@NotNull String password) throws IllegalStateException {
 		byte[] salt = new byte[SIZE / 8];
 		random.nextBytes(salt);
-		byte[] dk = pbkdf2(password.toCharArray(), salt, iterations(cost));
+		byte[] dk = pbkdf2(password.toCharArray(), salt, iterations(shifts));
 		byte[] hash = new byte[salt.length + dk.length];
 		System.arraycopy(salt, 0, hash, 0, salt.length);
 		System.arraycopy(dk, 0, hash, salt.length, dk.length);
 		Base64.Encoder enc = Base64.getUrlEncoder().withoutPadding();
-		return getServiceId() + PasswordService.TOKEN_SEPARATOR + cost + PasswordService.TOKEN_SEPARATOR + enc.encodeToString(hash);
+		return getServiceId() + PasswordService.TOKEN_SEPARATOR + shifts + PasswordService.TOKEN_SEPARATOR + enc.encodeToString(hash);
 	}
 
 	/**
@@ -112,24 +112,26 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	//region private methods
 
 	/**
-	 * This method returns the amount of iterations for the hashing algorithm, given a certain cost factor.
-	 * @param cost the costs for the algorithm
-	 * @return the amount of iterations to perform
+	 * This method computes the number of bit shifts, given a certain cost factor.
+	 * @param costFactor the cost factor to take into consideration
+	 * @return the number of bit shifts to perform
 	 */
-	private int iterations(int cost)
-	{
-		return 1 << Math.min(MAX_COST, Math.max(MIN_COST, cost));
+	private int shifts(int costFactor) {
+		costFactor = Math.min(100, Math.max(0, costFactor));
+
+		return MIN_SHIFTS + (int) Math.floor((MAX_SHIFTS - MIN_SHIFTS) * (costFactor / (double) 100) + 0.5);
 	}
 
 	/**
-	 * This method calculates the cost, given a certain cost factor.
-	 * @param costFactor the cost factor
-	 * @return the actual cost
+	 * This method returns the amount of iterations for the hashing algorithm, given a certain cost factor.
+	 * @param shifts the cost factor for the algorithm
+	 * @return the amount of iterations to perform
 	 */
-	private int cost(int costFactor) {
-		costFactor = Math.min(100, Math.max(0, costFactor));
+	private int iterations(int shifts)
+	{
+		shifts = Math.min(MAX_SHIFTS, Math.max(MIN_SHIFTS, shifts));
 
-		return Math.round((1 + MAX_COST - MIN_COST) * (costFactor / 100.0f));
+		return 1 << shifts;
 	}
 
 	/**
@@ -137,7 +139,7 @@ public class PBKDF2WithHmacSHA1_v1 implements PasswordService {
 	 * @param password the password to hash
 	 * @param salt the salt to use
 	 * @param iterations the iterations
-	 * @return the produced hsah
+	 * @return the produced hash
 	 * @throws IllegalStateException thrown, if something goes wrong
 	 */
 	private byte[] pbkdf2(char[] password, byte[] salt, int iterations) throws IllegalStateException

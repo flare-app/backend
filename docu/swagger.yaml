@@ -1,0 +1,165 @@
+swagger: '2.0'
+info:
+  description: This is the Flare-Backend API documentation.
+  version: 0.0.1
+  title: Flare
+host: flare.greensward.de
+basePath: /api
+schemes:
+  - http
+paths:
+  /user/login:
+    post:
+      description: This route tries to authenticate a given user.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: The user information to authenticate
+          required: true
+          schema:
+            title: User
+            type: object
+            properties:
+              email:
+                type: string
+              unitName:
+                type: string
+              unitCity:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: User login succeeded
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '500':
+          description: User not authenticated
+          schema:
+            $ref: '#/definitions/NoMessageResponse'
+  /user/login/admin:
+    post:
+      description: This route tries to authenticate a given flare-administrator.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: The flare-administrator information to authenticate
+          required: true
+          schema:
+            title: User
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: Flare-administrator login succeeded
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '500':
+          description: Flare-administrator not authenticated
+          schema:
+            $ref: '#/definitions/NoMessageResponse'
+  '/user/create/{authenticationToken}':
+    post:
+      description: This route tries to create a new user.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: authenticationToken
+          description: User specific token for easy authentication
+          required: true
+          type: string
+        - in: body
+          name: userInformation
+          description: All information needed to create the new user
+          required: true
+          schema:
+            $ref: '#/definitions/CreateUserBody'
+      responses:
+        '200':
+          description: User was created
+          schema:
+            $ref: '#/definitions/CreateUserResponse'
+        '400':
+          description: The request could not be interpreted
+          schema:
+            $ref: '#/definitions/MessageResponse'
+        '403':
+          description: You are not allowed to access this route
+          schema:
+            $ref: '#/definitions/MessageResponse'
+        '500':
+          description: Server error
+          schema:
+            $ref: '#/definitions/MessageResponse'
+definitions:
+  Authorization:
+    type: object
+    properties:
+      values:
+        type: string
+        enum:
+          - NONE
+          - EXTERNAL
+          - OBSERVER
+          - APP
+          - UNIT_ADMINISTRATOR
+          - FLARE_ADMINISTRATOR
+  NoMessageResponse:
+    type: object
+    properties:
+      url:
+        type: string
+  MessageResponse:
+    type: object
+    properties:
+      url:
+        type: string
+      message:
+        type: string
+  LoginResponse:
+    type: object
+    properties:
+      authenticationToken:
+        type: string
+      passwordExpired:
+        type: boolean
+  CreateUserBody:
+    type: object
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      authorization:
+        $ref: '#/definitions/Authorization'
+      qualifications:
+        type: array
+        items:
+          type: string
+  CreateUserResponse:
+    allOf:
+      - $ref: '#/definitions/CreateUserBody'
+      - properties:
+          password:
+            type: string
+          unitName:
+            type: string
+          unitCity:
+            type: string

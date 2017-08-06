@@ -106,6 +106,10 @@ public final class DatabaseAccess {
 	}
 
 	public static User getUser(RequestContext context, String authenticationToken) {
+		if (authenticationToken == null || authenticationToken.isEmpty()) {
+			return null;
+		}
+
 		Session session = getSession(context);
 		Transaction transaction = session.beginTransaction();
 

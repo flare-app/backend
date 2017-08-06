@@ -10,6 +10,8 @@ import de.flare.http.HttpStatus;
 import de.flare.http.RequestContext;
 import de.flare.http.WebServer;
 
+import static spark.Spark.halt;
+
 public final class UnitEndpoint {
 
 	//region private const
@@ -38,10 +40,10 @@ public final class UnitEndpoint {
 				response.add(toJson(unit));
 			}
 		} catch (Exception e) {
-			throw WebServer.invalidBody();
+			throw halt(HttpStatus.BAD_REQUEST, context.getResponseMessages().bodyIsInvalid());
 		}
 
-		WebServer.respond(context, "ok", response, HttpStatus.OK);
+		WebServer.respond(context, context.getResponseMessages().requestIsSuccessful(), response, HttpStatus.OK);
 	}
 
 	private static JsonObject toJson(Unit unit) {

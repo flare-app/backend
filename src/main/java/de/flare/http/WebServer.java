@@ -9,6 +9,7 @@ import de.flare.database.model.User;
 import de.flare.http.api.APIRoute;
 import de.flare.http.api.UnitEndpoint;
 import de.flare.http.api.UserEndpoint;
+import de.flare.http.response.ResponseFactory;
 import de.flare.properties.PropertyEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,10 +89,6 @@ public final class WebServer {
 		context.getResponse().status(status);
 	}
 
-	public static HaltException invalidBody() {
-		return halt(HttpStatus.BAD_REQUEST, "body could not be parsed");
-	}
-
 	public static void get(String uri, APIRoute route) {
 		if (sparkService == null) {
 			throw new IllegalStateException("spark service not configured");
@@ -105,7 +102,6 @@ public final class WebServer {
 			throw new IllegalStateException("spark service not configured");
 		}
 
-		uri = String.format("%s/{%s}", uri, AUTHENTICATION_TOKEN_PARAMETER);
 		sparkService.get(uri, (request, response) -> executeRequest(request, response, route, allowPasswordExpired, neededAuthorization));
 	}
 
@@ -122,7 +118,6 @@ public final class WebServer {
 			throw new IllegalStateException("spark service not configured");
 		}
 
-		uri = String.format("%s/:%s", uri, AUTHENTICATION_TOKEN_PARAMETER);
 		sparkService.post(uri, (request, response) -> executeRequest(request, response, route, allowPasswordExpired, neededAuthorization));
 	}
 	//endregion
@@ -169,7 +164,7 @@ public final class WebServer {
 	private static String executeRequest(Request request, Response response, APIRoute route, boolean allowPasswordExpired, Authorization... neededAuthorization) {
 		RequestContext context = startExecution(request, response);
 
-		String authenticationToken = request.params(AUTHENTICATION_TOKEN_PARAMETER);
+		String authenticationToken = request.queryParamOrDefault(AUTHENTICATION_TOKEN_PARAMETER, "");
 
 		User user = DatabaseAccess.getUser(context, authenticationToken);
 
@@ -198,13 +193,20 @@ public final class WebServer {
 	private static RequestContext startExecution(Request request, Response response) {
 		logger.info("--> " + request.url());
 
-		return new RequestContext()
+		response.type("application/json");
+		return ResponseFactory.setResponseTexts(new RequestContext()
 				.setRequest(request)
-				.setResponse(response);
+				.setResponse(response));
 	}
 
 	private static void execute(RequestContext context, APIRoute route) {
 		try {
+			if (context.getRequest().body() != null
+					&& !context.getRequest().body().isEmpty()
+					&& !context.getRequest().contentType().equalsIgnoreCase("application/json")) {
+				throw halt(HttpStatus.BAD_REQUEST, context.getResponseMessages().bodyIsInvalid());
+			}
+
 			route.handle(context);
 		} catch (HaltException halt) {
 			// suppress exception
